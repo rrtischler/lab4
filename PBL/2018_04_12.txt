@@ -1,0 +1,49 @@
+SESSÃO PBL 01
+
+12/04/2018
+
+ ==========
+|  IDEIAS  |
+ ==========
+- GIT
+  Criado: https://github.com/rrtischler/lab4
+- Overleaf
+- Whastapp
+- Slack
+
+ ==========
+|  FATOS  |
+ ==========
+- FPGA DE2-115, Altera
+- Verilog
+- VGA (2o problema)
+
+ ============
+|  QUESTÕES  |
+ ============
+- 5 estágios funcionais
+  IF = Instruction Fetch, ID = Instruction Decode, EX = Execute, MEM = Memory access, WB = Register write back
+- Hazard raw consecutivos
+- memória segmentada
+- modos de endereçamento
+- o que é pipeline?
+- o que são registradores auxiliares?
+  Os registradores R0 e R1 armazenam os valores 0 e 1, respectivamente. Não devem ser alterados (?)
+
+=========
+|  METAS  |
+ =========
+- Estudar sobre pipeline (19/04)
+- Projetar o layout das instruções
+  OP_Code: 5 bits, ExtraCode: 1 bit, Reg: 5 bits, Imediato: 16 bits, etc...
+
+
+
+
+
+
+
+
+
+
+
