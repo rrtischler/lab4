@@ -6,6 +6,8 @@ Entrega: 23/05/2018
 
 ### Colaboradores:
 [Felipe](https://github.com/Toxad)
+
 [Lennon Roseira]
+
 [Rafael Ritzel Tischler](https://github.com/rrtischler)
 
