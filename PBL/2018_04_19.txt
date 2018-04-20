@@ -1,0 +1,34 @@
+SESSÃO PBL 02
+
+19/04/2018
+
+ ==========
+|  IDEIAS  |
+ ==========
+
+
+ ==========
+|  FATOS  |
+ ==========
+
+
+ ============
+|  QUESTÕES  |
+ ============
+- Como tratar hazards RAW (read after write) consecutivos?
+
+=========
+|  METAS  |
+ =========
+- Ler e entender documentos enviados pelo professor, sobre pipeline.
+- Estruturar as entradas, saídas e funcionalidade de cada um dos estágios do processador pipeline
+
+
+
+
+
+
+
+
+
+
