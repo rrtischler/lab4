@@ -22,13 +22,3 @@ SESSÃO PBL 02
  =========
 - Ler e entender documentos enviados pelo professor, sobre pipeline.
 - Estruturar as entradas, saídas e funcionalidade de cada um dos estágios do processador pipeline
-
-
-
-
-
-
-
-
-
-
