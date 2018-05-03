@@ -13,6 +13,21 @@ module InstDecode(REG_A, REG_B, OPCD, RD, IMM, NPC, CLK, RST, IF_ID, DATA_WRBK, 
 	input [15:0] DATA_WRBK;
 	input [5:0] OPCD_WRBK;
 	input [4:0] RD_WRBK;
+
+	reg [31:0] [15:0] ARR_REG;
+
+	parameter SW = 5'b00001;
+
+	always @ (posedge CLK) begin
+		if(!RST) begin
+			ARR_REG <= 0;
+		end
+		else begin
+			if(OPCD_WRBK == SW ) begin
+				ARR_REG [RD_WRBK] <= DATA_WRBK;
+			end
+		end
+	end
 	
 	
 endmodule
