@@ -1,0 +1,54 @@
+SESSÃO PBL 03
+
+26/04/2018
+
+ ==========
+|  IDEIAS  |
+ ==========
+BRLF com 5 bits para Flag e usar o bit extra para const (T/F)
+
+Memória de Instrução: ROM/RAM
+Memória execução: RAM
+Output REG IR
+Imediato JC->16
+
+ ==========
+|  FATOS  |
+ ==========
+
+IF: Input: 16 Bits - ULA
+           1 Bit - Cond
+           32 - IR
+           1 - CLK
+           1 - RST
+           32 - MEM_OUT
+   Output: 16 - NPC \ IF_ID
+           32 - IR  /
+           16 - ADDR
+           1 - CLK_MEM
+           
+ ID: Input: 1 - CLK
+            1 - RST
+            48 - IF_ID
+            16 - DATA_WRBK
+            6 - OP_CD_WRBK
+            5 - RD_WRBK
+            
+    Output: 6 - OP_CD + Extra (T/F)
+            16 - REG_A
+            16 - REG_B
+            5 - RD ou Const
+            16 - IMM
+            16 - NPC
+
+ ============
+|  QUESTÕES  |
+ ============
+
+
+=========
+|  METAS  |
+ =========
+Terminar os blocos
+Começar implementação
+Definir Hazard
