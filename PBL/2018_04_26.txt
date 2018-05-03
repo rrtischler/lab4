@@ -52,3 +52,4 @@ IF: Input: 16 Bits - ULA
 Terminar os blocos
 Começar implementação
 Definir Hazard
+
