@@ -1,0 +1,27 @@
+SESSÃO PBL 04
+
+03/05/2018
+
+ ==========
+|  IDEIAS  |
+ ==========
+- FSM para cada estágio do pipeline;
+- Sincronizar FSMs;
+- FSMs com mesmo número de estados (facilitar sincronia)
+- Hazard: usar counter/timestamp no banco de registradores
+- Write Back: escrita + leitura separadas e distintas na FSM 
+
+ ==========
+|  FATOS  |
+ ==========
+
+
+ ============
+|  QUESTÕES  |
+ ============
+
+
+=========
+|  METAS  |
+ =========
+
