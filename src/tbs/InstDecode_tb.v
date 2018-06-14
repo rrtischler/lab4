@@ -7,11 +7,10 @@ wire [4:0] ADDR_REG;
 
 wire [2:0] ESTADO;
 
-reg RST, CLK;
 reg [31:0] IR;
 reg [15:0] NPC_IN, MEM_ACC_OUT, EXE_OUT, WB_OUT;
 reg [4:0] RD_WB;
-reg COND_WB;
+reg COND_WB, RST, CLK;
 
 
 InstFetch tb_inst
@@ -34,7 +33,7 @@ InstFetch tb_inst
   .COND_WB(COND_WB)
 );
 
-always #20 clk = ~clk;
+always #20 CLK = ~CLK;
 
 
 initial

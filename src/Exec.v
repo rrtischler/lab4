@@ -1,10 +1,10 @@
 module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B, IMM, OPCD_IN, ADDR_REG_IN, CLK, RST, OPT_BIT_IN, ESTADO);
 
-    output reg [31:0] ALU_OUT;
+    output [31:0] ALU_OUT;
     output reg [4:0] OPCD_OUT, ADDR_REG_OUT;
     output reg OPT_BIT_OUT, COND;
     
-    output reg [2:0] ESTADO;
+    output [2:0] ESTADO;
 
     input [15:0] NPC_IN, REG_A, REG_B, IMM;
     input [4:0] OPCD_IN, ADDR_REG_IN;
@@ -13,7 +13,7 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, R
     reg [4:0] RFLAGS;
 
     reg [2:0] STATE, NEXT_STATE;
-    parameter 	IDLE = 0,
+    parameter   IDLE = 0,
                 CALCULA_ULA_1 = 1,
                 CALCULA_ULA_2 = 2,
                 CALCULA_ULA_3 = 3,
@@ -22,25 +22,25 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, R
                 VAZIO_0 = 6;
 
 
-    parameter	LW 		= 5'b00000,
-                SW 		= 5'b00001,
+    parameter   LW      = 5'b00000,
+                SW      = 5'b00001,
                 //
-                ADD 	= 5'b00010,
-                SUB		= 5'b00011,
-                MUL 	= 5'b00100,
-                DIV 	= 5'b00101,
+                ADD     = 5'b00010,
+                SUB     = 5'b00011,
+                MUL     = 5'b00100,
+                DIV     = 5'b00101,
                 //
-                AND		= 5'b00110,
-                OR		= 5'b00111,
-                CMP		= 5'b01000,
-                NOT 	= 5'b01001,
+                AND     = 5'b00110,
+                OR      = 5'b00111,
+                CMP     = 5'b01000,
+                NOT     = 5'b01001,
                 //
-                JR		= 5'b01010,
-                JPC		= 5'b01011,
-                BRLF	= 5'b01100,
-                CALL	= 5'b01101,
-                RET 	= 5'b01110,
-                NOP 	= 5'b01111;
+                JR      = 5'b01010,
+                JPC     = 5'b01011,
+                BRLF    = 5'b01100,
+                CALL    = 5'b01101,
+                RET     = 5'b01110,
+                NOP     = 5'b01111;
     
     // debug
     assign ESTADO = STATE;
@@ -75,7 +75,7 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, R
                 CALCULA_ULA_2: NEXT_STATE = CALCULA_ULA_3;
                 CALCULA_ULA_3: NEXT_STATE = SEND;
                 SEND: NEXT_STATE = BRANCH_JUMP;
-                BRANCH_JUMP: NEXT_STATE = VAZIO_0,
+                BRANCH_JUMP: NEXT_STATE = VAZIO_0;
                 VAZIO_0: NEXT_STATE = CALCULA_ULA_1;
                 default: NEXT_STATE = IDLE;
             endcase
@@ -89,9 +89,10 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, R
             RFLAGS <= 0;
         end
         else begin
-            // defaults
-            STATE <= NEXT_STATE;
+              STATE <= NEXT_STATE;
+            /* defaults */
             RFLAGS <= RFLAGS;
+            /* state logic */
             // if(STATE == CALCULA_ULA_1 ||
             //    STATE == CALCULA_ULA_2 ||
             //    STATE == CALCULA_ULA_3) begin

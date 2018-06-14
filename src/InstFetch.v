@@ -1,18 +1,19 @@
 module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT, ESTADO);
-    output reg MEM_CLK;
-    output reg [15:0] NPC, MEM_ADDR;
+
     output reg [31:0] IR;
+    output reg [15:0] NPC, MEM_ADDR;
+    output reg MEM_CLK;
     
-    output reg [2:0] ESTADO;
+    output [2:0] ESTADO;
     
-    input RST, CLK, COND;
-    input [15:0] ULA;
     input [31:0] MEM_OUT;
+    input [15:0] ULA;
+    input RST, CLK, COND;
 
     reg [15:0] PC;
 
     reg [2:0] STATE, NEXT_STATE;
-    parameter 	IDLE = 0,
+    parameter   IDLE = 0,
                 PREP_READ = 1,
                 READ_SEND = 2,
                 VAZIO_0 = 3,
@@ -49,10 +50,10 @@ module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT, ESTAD
             STATE <= IDLE;
         end
         else begin
-            // defaults
             STATE <= NEXT_STATE;
+            /* defaults */
             PC <= PC;
-            // states
+            /* state logic */
             if(STATE == INC_PC)
                 PC <= PC + 1;
             else if(STATE == UPDATE_PC && COND)

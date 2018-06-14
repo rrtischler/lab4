@@ -9,7 +9,7 @@ wire [2:0] ESTADO;
 
 reg [15:0] DATA_IN;
 reg [4:0] OPCD_IN, ADDR_REG_IN;
-reg OPT_BIT_IN;
+reg OPT_BIT_IN, RST, CLK;
 
 
 InstFetch tb_inst
@@ -21,10 +21,12 @@ InstFetch tb_inst
   .DATA_IN(DATA_IN),
   .OPCD_IN(OPCD_IN),
   .ADDR_REG_IN(ADDR_REG_IN),
-  .OPT_BIT_IN(OPT_BIT_IN)
+  .OPT_BIT_IN(OPT_BIT_IN),
+  .RST(RST),
+  .CLK(CLK)
 );
 
-always #20 clk = ~clk;
+always #20 CLK = ~CLK;
 
 
 initial

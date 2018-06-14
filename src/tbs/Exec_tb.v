@@ -16,7 +16,7 @@ InstFetch tb_inst
   .ALU_OUT(ALU_OUT),
   .OPCD_OUT(OPCD_OUT),
   .ADDR_REG_OUT(ADDR_REG_OUT),
-  .wire OPT_BIT_OUT(OPT_BIT_OUT),
+  .OPT_BIT_OUT(OPT_BIT_OUT),
   .COND(COND),
   .ESTADO(ESTADO),
   .NPC_IN(NPC_IN),
@@ -25,12 +25,12 @@ InstFetch tb_inst
   .IMM(IMM),
   .OPCD_IN(OPCD_IN),
   .ADDR_REG_IN(ADDR_REG_IN),
-  .reg CLK(CLK),
+  .CLK(CLK),
   .RST(RST),
   .OPT_BIT_IN(OPT_BIT_IN)
 );
 
-always #20 clk = ~clk;
+always #20 CLK = ~CLK;
 
 
 initial

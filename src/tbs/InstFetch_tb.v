@@ -27,7 +27,7 @@ InstFetch tb_inst
   .MEM_OUT(MEM_OUT)
 );
 
-always #20 clk = ~clk;
+always #20 CLK = ~CLK;
 
 
 initial

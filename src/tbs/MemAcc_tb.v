@@ -10,30 +10,29 @@ wire [2:0] ESTADO;
 
 reg [15:0] ALU_OUT, MEM_DATA;
 reg [4:0] OPCD_IN, ADDR_REG_IN;
-reg OPT_BIT_IN;
-reg RST, CLK;
+reg OPT_BIT_IN, RST, CLK;
 
 
 InstFetch tb_inst
 (
-  .DATA_OUT(),
-  .MEM_DATA_ADDR(),
-  .OPCD_OUT(),
-  .ADDR_REG_OUT(),
-  .OPT_BIT_OUT(),
-  .MEM_DATA_CLK_READ(),
-  .MEM_DATA_CLK_WRITE(),
-  .ESTADO(),
-  .ALU_OUT(),
-  .MEM_DATA(),
-  .OPCD_IN(),
-  .ADDR_REG_IN(),
-  .OPT_BIT_IN(),
-  .RST(),
-  .CLK()
+  .DATA_OUT(DATA_OUT),
+  .MEM_DATA_ADDR(MEM_DATA_ADDR),
+  .OPCD_OUT(OPCD_OUT),
+  .ADDR_REG_OUT(ADDR_REG_OUT),
+  .OPT_BIT_OUT(OPT_BIT_OUT),
+  .MEM_DATA_CLK_READ(MEM_DATA_CLK_READ),
+  .MEM_DATA_CLK_WRITE(MEM_DATA_CLK_WRITE),
+  .ESTADO(ESTADO),
+  .ALU_OUT(ALU_OUT),
+  .MEM_DATA(MEM_DATA),
+  .OPCD_IN(OPCD_IN),
+  .ADDR_REG_IN(ADDR_REG_IN),
+  .OPT_BIT_IN(OPT_BIT_IN),
+  .RST(RST),
+  .CLK(CLK)
 );
 
-always #20 clk = ~clk;
+always #20 CLK = ~CLK;
 
 
 initial
