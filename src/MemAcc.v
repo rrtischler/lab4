@@ -1,9 +1,12 @@
-module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_DATA_CLK_READ, MEM_DATA_CLK_WRITE, ALU_OUT, MEM_DATA, OPCD_IN, ADDR_REG_IN, OPT_BIT_IN, COND, RST, CLK);
+module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_DATA_CLK_READ, 
+                MEM_DATA_CLK_WRITE, ALU_OUT, MEM_DATA, OPCD_IN, ADDR_REG_IN, OPT_BIT_IN, COND, RST, CLK, ESTADO);
 
     output reg [15:0] DATA_OUT;
     output reg [9:0] MEM_DATA_ADDR;
     output reg [4:0] OPCD_OUT, ADDR_REG_OUT;
     output reg OPT_BIT_OUT, MEM_DATA_CLK_READ, MEM_DATA_CLK_WRITE;
+
+    output reg [2:0] ESTADO;
 
     input [15:0] ALU_OUT, MEM_DATA;
     input [4:0] OPCD_IN, ADDR_REG_IN;
@@ -40,6 +43,9 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
                 CALL	= 5'b01101,
                 RET 	= 5'b01110,
                 NOP 	= 5'b01111;
+    
+    // debug
+    assign ESTADO = STATE;
     
     // DPE
     always @ (STATE) begin

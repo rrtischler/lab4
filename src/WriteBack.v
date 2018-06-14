@@ -4,6 +4,8 @@ module WriteBack(DATA_OUT, ADDR_REG_OUT, COND, DATA_IN, OPCD_IN, ADDR_REG_IN, OP
     output reg [4:0] ADDR_REG_OUT;
     output reg COND;
 
+    output reg [2:0] ESTADO;
+
     input [15:0] DATA_IN;
     input [4:0] OPCD_IN, ADDR_REG_IN;
     input OPT_BIT_IN;
@@ -39,6 +41,9 @@ module WriteBack(DATA_OUT, ADDR_REG_OUT, COND, DATA_IN, OPCD_IN, ADDR_REG_IN, OP
                 CALL	= 5'b01101,
                 RET 	= 5'b01110,
                 NOP 	= 5'b01111;
+    
+    // debug
+    assign ESTADO = STATE;
     
     // DPE
     always @ (STATE) begin

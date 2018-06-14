@@ -1,8 +1,10 @@
-module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B, IMM, OPCD_IN, ADDR_REG_IN, CLK, RST, OPT_BIT_IN);
+module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B, IMM, OPCD_IN, ADDR_REG_IN, CLK, RST, OPT_BIT_IN, ESTADO);
 
     output reg [31:0] ALU_OUT;
     output reg [4:0] OPCD_OUT, ADDR_REG_OUT;
     output reg OPT_BIT_OUT, COND;
+    
+    output reg [2:0] ESTADO;
 
     input [15:0] NPC_IN, REG_A, REG_B, IMM;
     input [4:0] OPCD_IN, ADDR_REG_IN;
@@ -39,6 +41,9 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, R
                 CALL	= 5'b01101,
                 RET 	= 5'b01110,
                 NOP 	= 5'b01111;
+    
+    // debug
+    assign ESTADO = STATE;
 
     // ULA
     assign ALU_OUT = (OPCD_IN == LW)    ? REG_B + IMM // precisa para valor de memoria regB + Imm

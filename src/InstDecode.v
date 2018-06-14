@@ -1,8 +1,10 @@
-module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT, COND_WB, RD_WB, MEM_ACC_OUT, EXE_OUT, ADDR_REG);
+module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT, COND_WB, RD_WB, MEM_ACC_OUT, EXE_OUT, ADDR_REG, ESTADO);
 
     output reg [15:0] REG_A, REG_B, IMM, NPC_OUT;
     output reg [5:0] OPCD;
     output reg [4:0] ADDR_REG;
+
+    output reg [2:0] ESTADO;
     // output reg [4:0] RD; // ???
 
     input RST, CLK;
@@ -43,6 +45,9 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
                 CALL	= 5'b01101,
                 RET 	= 5'b01110,
                 NOP 	= 5'b01111;
+    
+    // debug
+    assign ESTADO = STATE;
 
     // DPE			
     always @(*) begin

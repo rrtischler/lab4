@@ -1,7 +1,9 @@
-module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT);
+module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT, ESTADO);
     output reg MEM_CLK;
     output reg [15:0] NPC, MEM_ADDR;
     output reg [31:0] IR;
+    
+    output reg [2:0] ESTADO;
     
     input RST, CLK, COND;
     input [15:0] ULA;
@@ -17,6 +19,9 @@ module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT);
                 VAZIO_1 = 4,
                 INC_PC = 5,
                 UPDATE_PC = 6;
+
+    // debug
+    assign ESTADO = STATE;
 
     // DPE
     always @ (STATE) begin
