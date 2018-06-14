@@ -171,6 +171,12 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, R
                 end
             endcase
         end
+        else begin
+            OPCD_OUT = 0;
+            ADDR_REG_OUT = 0;
+            OPT_BIT_OUT = 0;
+            COND = 0;
+        end
     end
 
 endmodule

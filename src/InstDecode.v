@@ -393,5 +393,13 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
                 end
             endcase
         end
+        else begin
+            REG_A = 0;
+            REG_B = 0;
+            IMM = 0;
+            NPC_OUT = 0;
+            OPCD = 0;
+            ADDR_REG = 0;
+        end
     end
 endmodule

@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module infrared_tb();
+module InstDecode_tb();
 
 wire [15:0] REG_A, REG_B, IMM, NPC_OUT;
 wire [5:0] OPCD;
@@ -13,7 +13,7 @@ reg [4:0] RD_WB;
 reg COND_WB, RST, CLK;
 
 
-InstFetch tb_inst
+InstDecode tb_inst
 (
   .REG_A(REG_A),
   .REG_B(REG_B),

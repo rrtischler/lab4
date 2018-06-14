@@ -1,14 +1,16 @@
-module ID_EX(REG_A_OUT, REG_B_OUT, IMM_OUT, NPC_OUT_OUT, OPCD_OUT, ADDR_REG_OUT, RESET_OUT,
-             REG_A_IN, REG_B_IN, IMM_IN, NPC_OUT_IN, OPCD_IN, ADDR_REG_IN);
+module ID_EX(REG_A_OUT, REG_B_OUT, IMM_OUT, NPC_OUT_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT, RESET_OUT,
+             REG_A_IN, REG_B_IN, IMM_IN, NPC_OUT_IN, OPCD_IN, ADDR_REG_IN, CLK, RST);
 
     output reg [15:0] REG_A_OUT, REG_B_OUT, IMM_OUT, NPC_OUT_OUT;
-    output reg [5:0] OPCD_OUT;
+    output reg [4:0] OPCD_OUT;
     output reg [4:0] ADDR_REG_OUT;
+    output reg OPT_BIT;
     output RESET_OUT;
 
     input [15:0] REG_A_IN, REG_B_IN, IMM_IN, NPC_OUT_IN;
     input [5:0] OPCD_IN;
     input [4:0] ADDR_REG_IN;
+    input CLK, RST;
 
 	reg RESET;
 
@@ -24,8 +26,8 @@ module ID_EX(REG_A_OUT, REG_B_OUT, IMM_OUT, NPC_OUT_OUT, OPCD_OUT, ADDR_REG_OUT,
 				WAIT_8 = 8,
 				WAIT_9 = 9,
 				WAIT_10 = 10,
-				GET_DATA = 11, // TODO resolver problema de GET_DATA atrasado
-				PREPARE_DATA = 12; // talvez seja muito tarde
+				GET_PREPARE_DATA = 11,
+				WAIT_12 = 12;
 
     assign RESET_OUT = RESET;
 
@@ -79,15 +81,26 @@ module ID_EX(REG_A_OUT, REG_B_OUT, IMM_OUT, NPC_OUT_OUT, OPCD_OUT, ADDR_REG_OUT,
             IMM_OUT = IMM_OUT;
             NPC_OUT_OUT = NPC_OUT_OUT;
             OPCD_OUT = OPCD_OUT;
+            OPT_BIT = OPT_BIT;
             ADDR_REG_OUT = ADDR_REG_OUT;
-            if(STATE == PREPARE_DATA) begin
+            if(STATE == GET_PREPARE_DATA) begin
                 REG_A_OUT = REG_A_IN;
                 REG_B_OUT = REG_B_IN;
-                IMM_OUT = IMMT_IN;
+                IMM_OUT = IMM_IN;
                 NPC_OUT_OUT = NPC_OUT_IN;
-                OPCD_OUT = OPCD_IN;
+                OPCD_OUT = OPCD_IN[5:1];
+                OPT_BIT = OPCD_IN[0];
                 ADDR_REG_OUT = ADDR_REG_IN;
             end
+        end
+        else begin
+            REG_A_OUT = 0;
+            REG_B_OUT = 0;
+            IMM_OUT = 0;
+            NPC_OUT_OUT = 0;
+            OPCD_OUT = 0;
+            OPT_BIT = 0;
+            ADDR_REG_OUT = 0;
         end
     end
 	

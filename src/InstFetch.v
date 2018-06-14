@@ -114,13 +114,13 @@ module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT, ESTAD
                     MEM_ADDR = 0;
                     IR = 0;
                 end
-                default: begin
-                    MEM_CLK = 0;
-                    NPC = 0;
-                    MEM_ADDR = 0;
-                    IR = 0;
-                end
             endcase
+        end
+        else begin
+            MEM_CLK = 0;
+            NPC = 0;
+            MEM_ADDR = 0;
+            IR = 0;
         end
     end
 endmodule

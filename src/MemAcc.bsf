@@ -1,0 +1,250 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2017  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 16 16 328 192)
+	(text "MemAcc" (rect 5 0 43 12)(font "Arial" ))
+	(text "inst" (rect 8 160 20 172)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "ALU_OUT[15..0]" (rect 0 0 70 12)(font "Arial" ))
+		(text "ALU_OUT[15..0]" (rect 21 27 91 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "MEM_DATA[15..0]" (rect 0 0 82 12)(font "Arial" ))
+		(text "MEM_DATA[15..0]" (rect 21 43 103 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "OPCD_IN[4..0]" (rect 0 0 63 12)(font "Arial" ))
+		(text "OPCD_IN[4..0]" (rect 21 59 84 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "ADDR_REG_IN[4..0]" (rect 0 0 95 12)(font "Arial" ))
+		(text "ADDR_REG_IN[4..0]" (rect 21 75 116 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "OPT_BIT_IN" (rect 0 0 54 12)(font "Arial" ))
+		(text "OPT_BIT_IN" (rect 21 91 75 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 1))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "RST" (rect 0 0 20 12)(font "Arial" ))
+		(text "RST" (rect 21 107 41 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 1))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "CLK" (rect 0 0 20 12)(font "Arial" ))
+		(text "CLK" (rect 21 123 41 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 1))
+	)
+	(port
+		(pt 312 32)
+		(output)
+		(text "DATA_OUT[15..0]" (rect 0 0 79 12)(font "Arial" ))
+		(text "DATA_OUT[15..0]" (rect 212 27 291 39)(font "Arial" ))
+		(line (pt 312 32)(pt 296 32)(line_width 3))
+	)
+	(port
+		(pt 312 48)
+		(output)
+		(text "MEM_DATA_ADDR[9..0]" (rect 0 0 115 12)(font "Arial" ))
+		(text "MEM_DATA_ADDR[9..0]" (rect 176 43 291 55)(font "Arial" ))
+		(line (pt 312 48)(pt 296 48)(line_width 3))
+	)
+	(port
+		(pt 312 64)
+		(output)
+		(text "OPCD_OUT[4..0]" (rect 0 0 74 12)(font "Arial" ))
+		(text "OPCD_OUT[4..0]" (rect 217 59 291 71)(font "Arial" ))
+		(line (pt 312 64)(pt 296 64)(line_width 3))
+	)
+	(port
+		(pt 312 80)
+		(output)
+		(text "ADDR_REG_OUT[4..0]" (rect 0 0 106 12)(font "Arial" ))
+		(text "ADDR_REG_OUT[4..0]" (rect 185 75 291 87)(font "Arial" ))
+		(line (pt 312 80)(pt 296 80)(line_width 3))
+	)
+	(port
+		(pt 312 96)
+		(output)
+		(text "OPT_BIT_OUT" (rect 0 0 64 12)(font "Arial" ))
+		(text "OPT_BIT_OUT" (rect 227 91 291 103)(font "Arial" ))
+		(line (pt 312 96)(pt 296 96)(line_width 1))
+	)
+	(port
+		(pt 312 112)
+		(output)
+		(text "WRITE_ENABLE" (rect 0 0 81 12)(font "Arial" ))
+		(text "WRITE_ENABLE" (rect 210 107 291 119)(font "Arial" ))
+		(line (pt 312 112)(pt 296 112)(line_width 1))
+	)
+	(port
+		(pt 312 128)
+		(output)
+		(text "MEM_CLK" (rect 0 0 49 12)(font "Arial" ))
+		(text "MEM_CLK" (rect 242 123 291 135)(font "Arial" ))
+		(line (pt 312 128)(pt 296 128)(line_width 1))
+	)
+	(port
+		(pt 312 144)
+		(output)
+		(text "ESTADO[2..0]" (rect 0 0 61 12)(font "Arial" ))
+		(text "ESTADO[2..0]" (rect 230 139 291 151)(font "Arial" ))
+		(line (pt 312 144)(pt 296 144)(line_width 3))
+	)
+	(parameter
+		"IDLE"
+		"0"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"PREPARE_READ"
+		"1"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"READ_CLOCK"
+		"2"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"READ"
+		"3"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"PREPARE_WRITE"
+		"4"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"WRITE"
+		"5"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"VAZIO_0"
+		"6"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"LW"
+		"00000"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"SW"
+		"00001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"ADD"
+		"00010"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"SUB"
+		"00011"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"MUL"
+		"00100"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"DIV"
+		"00101"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"AND"
+		"00110"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"OR"
+		"00111"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"CMP"
+		"01000"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"NOT"
+		"01001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"JR"
+		"01010"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"JPC"
+		"01011"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"BRLF"
+		"01100"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"CALL"
+		"01101"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"RET"
+		"01110"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"NOP"
+		"01111"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(drawing
+		(rectangle (rect 16 16 296 160)(line_width 1))
+	)
+	(annotation_block (parameter)(rect 328 -64 428 16))
+)

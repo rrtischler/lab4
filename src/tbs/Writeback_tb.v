@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module infrared_tb();
+module Writeback_tb();
 
 wire [15:0] DATA_OUT;
 wire [4:0] ADDR_REG_OUT;
@@ -12,7 +12,7 @@ reg [4:0] OPCD_IN, ADDR_REG_IN;
 reg OPT_BIT_IN, RST, CLK;
 
 
-InstFetch tb_inst
+WriteBack tb_inst
 (
   .DATA_OUT(DATA_OUT),
   .ADDR_REG_OUT(ADDR_REG_OUT),

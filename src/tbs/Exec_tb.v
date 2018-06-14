@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module infrared_tb();
+module Exec_tb();
 
 wire [31:0] ALU_OUT;
 wire [4:0] OPCD_OUT, ADDR_REG_OUT;
@@ -11,7 +11,7 @@ reg [15:0] NPC_IN, REG_A, REG_B, IMM;
 reg [4:0] OPCD_IN, ADDR_REG_IN;
 reg CLK, RST, OPT_BIT_IN;
 
-InstFetch tb_inst
+Exec tb_inst
 (
   .ALU_OUT(ALU_OUT),
   .OPCD_OUT(OPCD_OUT),

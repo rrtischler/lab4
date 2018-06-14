@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module infrared_tb();
+module InstFetch_tb();
 
 wire MEM_CLK;
 wire [15:0] NPC, MEM_ADDR;
@@ -14,14 +14,13 @@ reg [31:0] MEM_OUT;
 
 InstFetch tb_inst
 (
-  .ESTADO(ESTADO)
+  .ESTADO(ESTADO),
   .MEM_CLK(MEM_CLK),
   .NPC(NPC),
   .MEM_ADDR(MEM_ADDR),
   .IR(IR),
   .COND(COND),
   .CLK(CLK),
-  .E(E),
   .RST(RST),
   .ULA(ULA),
   .MEM_OUT(MEM_OUT)

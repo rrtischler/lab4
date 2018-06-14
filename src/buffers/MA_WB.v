@@ -1,5 +1,5 @@
 module MA_WB(DATA_OUT_OUT, OPCD_OUT_OUT, ADDR_REG_OUT_OUT, OPT_BIT_OUT_OUT, RESET_OUT,
-             DATA_OUT_IN, OPCD_OUT_IN, ADDR_REG_OUT_IN, OPT_BIT_OUT_IN);
+             DATA_OUT_IN, OPCD_OUT_IN, ADDR_REG_OUT_IN, OPT_BIT_OUT_IN, CLK, RST);
 
     output reg [15:0] DATA_OUT_OUT;
     output reg [4:0] OPCD_OUT_OUT, ADDR_REG_OUT_OUT;
@@ -9,6 +9,7 @@ module MA_WB(DATA_OUT_OUT, OPCD_OUT_OUT, ADDR_REG_OUT_OUT, OPT_BIT_OUT_OUT, RESE
     input [15:0] DATA_OUT_IN;
     input [4:0] OPCD_OUT_IN, ADDR_REG_OUT_IN;
     input OPT_BIT_OUT_IN;
+    input CLK, RST;
 
     reg [15:0] DATA_OUT;
     reg [4:0] OPCD_OUT, ADDR_REG_OUT;
@@ -102,6 +103,12 @@ module MA_WB(DATA_OUT_OUT, OPCD_OUT_OUT, ADDR_REG_OUT_OUT, OPT_BIT_OUT_OUT, RESE
                 ADDR_REG_OUT_OUT = ADDR_REG_OUT;
                 OPT_BIT_OUT_OUT = OPT_BIT_OUT;
             end
+        end
+        else begin
+            DATA_OUT_OUT = 0;
+            OPCD_OUT_OUT = 0;
+            ADDR_REG_OUT_OUT = 0;
+            OPT_BIT_OUT_OUT = 0;
         end
     end
 

@@ -1,10 +1,10 @@
-module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_DATA_CLK_READ, 
-                MEM_DATA_CLK_WRITE, ALU_OUT, MEM_DATA, OPCD_IN, ADDR_REG_IN, OPT_BIT_IN, RST, CLK, ESTADO);
+module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, WRITE_ENABLE, 
+                MEM_CLK, ALU_OUT, MEM_DATA, OPCD_IN, ADDR_REG_IN, OPT_BIT_IN, RST, CLK, ESTADO);
 
     output reg [15:0] DATA_OUT;
     output reg [9:0] MEM_DATA_ADDR;
     output reg [4:0] OPCD_OUT, ADDR_REG_OUT;
-    output reg OPT_BIT_OUT, MEM_DATA_CLK_READ, MEM_DATA_CLK_WRITE;
+    output reg OPT_BIT_OUT, WRITE_ENABLE, MEM_CLK;
 
     output [2:0] ESTADO;
 
@@ -94,8 +94,8 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
                     OPCD_OUT = 0;
                     ADDR_REG_OUT = 0;
                     OPT_BIT_OUT = 0;
-                    MEM_DATA_CLK_READ = 0;
-                    MEM_DATA_CLK_WRITE = 0;
+                    WRITE_ENABLE = 0;
+                    MEM_CLK = 0;
                 end
                 PREPARE_READ: begin
                     DATA_OUT = DATA;
@@ -103,8 +103,8 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
                     OPCD_OUT = OPCD_IN;
                     ADDR_REG_OUT = ADDR_REG_IN;
                     OPT_BIT_OUT = OPT_BIT_IN;
-                    MEM_DATA_CLK_READ = 0;
-                    MEM_DATA_CLK_WRITE = 0;
+                    WRITE_ENABLE = 0;
+                    MEM_CLK = 0;
                 end
                 READ_CLOCK: begin
                     DATA_OUT = DATA;
@@ -112,11 +112,10 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
                     OPCD_OUT = OPCD_IN;
                     ADDR_REG_OUT = ADDR_REG_IN;
                     OPT_BIT_OUT = OPT_BIT_IN;
+                    WRITE_ENABLE = 0;
+                    MEM_CLK = 0;
                     if(OPCD_IN == LW && OPT_BIT_IN == 1)
-                        MEM_DATA_CLK_READ = 1;
-                    else
-                        MEM_DATA_CLK_READ = 0;
-                    MEM_DATA_CLK_WRITE = 0;
+                        MEM_CLK = 1;
                 end
                 READ: begin
                     DATA_OUT = DATA;
@@ -124,8 +123,8 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
                     OPCD_OUT = OPCD_IN;
                     ADDR_REG_OUT = ADDR_REG_IN;
                     OPT_BIT_OUT = OPT_BIT_IN;
-                    MEM_DATA_CLK_READ = 0;
-                    MEM_DATA_CLK_WRITE = 0;
+                    WRITE_ENABLE = 0;
+                    MEM_CLK = 0;
                 end
                 PREPARE_WRITE: begin
                     DATA_OUT = DATA;
@@ -133,8 +132,10 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
                     OPCD_OUT = OPCD_IN;
                     ADDR_REG_OUT = ADDR_REG_IN;
                     OPT_BIT_OUT = OPT_BIT_IN;
-                    MEM_DATA_CLK_READ = 0;
-                    MEM_DATA_CLK_WRITE = 0;
+                    WRITE_ENABLE = 0;
+                    MEM_CLK = 0;
+                    if(OPCD_IN == SW)
+                        WRITE_ENABLE = 1;
                 end
                 WRITE: begin
                     DATA_OUT = DATA;
@@ -142,11 +143,10 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
                     OPCD_OUT = OPCD_IN;
                     ADDR_REG_OUT = ADDR_REG_IN;
                     OPT_BIT_OUT = OPT_BIT_IN;
-                    MEM_DATA_CLK_READ = 0;
+                    WRITE_ENABLE = WRITE_ENABLE;
+                    MEM_CLK = 0;
                     if(OPCD_IN == SW)
-                        MEM_DATA_CLK_WRITE = 1;
-                    else
-                        MEM_DATA_CLK_WRITE = 0;
+                        MEM_CLK = 1;
                 end
                 VAZIO_0: begin
                     DATA_OUT = DATA;
@@ -154,8 +154,8 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
                     OPCD_OUT = OPCD_IN;
                     ADDR_REG_OUT = ADDR_REG_IN;
                     OPT_BIT_OUT = OPT_BIT_IN;
-                    MEM_DATA_CLK_READ = 0;
-                    MEM_DATA_CLK_WRITE = 0;
+                    WRITE_ENABLE = 0;
+                    MEM_CLK = 0;
                 end
                 default: begin
                     DATA_OUT = DATA;
@@ -163,12 +163,20 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
                     OPCD_OUT = OPCD_IN;
                     ADDR_REG_OUT = ADDR_REG_IN;
                     OPT_BIT_OUT = OPT_BIT_IN;
-                    MEM_DATA_CLK_READ = 0;
-                    MEM_DATA_CLK_WRITE = 0;
+                    WRITE_ENABLE = 0;
+                    MEM_CLK = 0;
                 end
             endcase
         end
-        
+        else begin
+            DATA_OUT = 0;
+            MEM_DATA_ADDR = 0;
+            OPCD_OUT = 0;
+            ADDR_REG_OUT = 0;
+            OPT_BIT_OUT = 0;
+            WRITE_ENABLE = 0;
+            MEM_CLK = 0;
+        end
     end
 
 endmodule

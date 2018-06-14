@@ -1,4 +1,4 @@
-module IF_ID(IR_OUT, NPC_OUT, RESET_OUT, IR_IN, NPC_IN);
+module IF_ID(IR_OUT, NPC_OUT, RESET_OUT, IR_IN, NPC_IN, CLK, RST);
 
 	output reg [31:0] IR_OUT;
 	output reg [15:0] NPC_OUT;
@@ -6,6 +6,7 @@ module IF_ID(IR_OUT, NPC_OUT, RESET_OUT, IR_IN, NPC_IN);
 
 	input [31:0] IR_IN;
 	input [15:0] NPC_IN;
+    input CLK, RST;
 
 	reg [31:0] IR;
 	reg [15:0] NPC;
@@ -87,6 +88,10 @@ module IF_ID(IR_OUT, NPC_OUT, RESET_OUT, IR_IN, NPC_IN);
 				IR_OUT = IR;
 				NPC_OUT = NPC;
 			end
+        end
+        else begin
+            IR_OUT = 0;
+			NPC_OUT = 0;
         end
     end
 

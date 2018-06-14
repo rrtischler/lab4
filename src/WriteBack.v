@@ -90,6 +90,11 @@ module WriteBack(DATA_OUT, ADDR_REG_OUT, COND, DATA_IN, OPCD_IN, ADDR_REG_IN, OP
             else
                 COND = 0;
         end
+        else begin
+            DATA_OUT = 0;
+            ADDR_REG_OUT = 0;
+            COND = 0;
+        end
     end
 
 endmodule
