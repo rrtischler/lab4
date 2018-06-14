@@ -7,7 +7,7 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
 
     input [15:0] ALU_OUT, MEM_DATA;
     input [4:0] OPCD_IN, ADDR_REG_IN;
-    input OPT_BIT_IN, COND;
+    input OPT_BIT_IN;
     input RST, CLK;
 
     reg [15:0] DATA;
@@ -69,93 +69,99 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, MEM_
         else begin
             STATE <= NEXT_STATE;
             DATA <= DATA;
-            if(STATE == READ && OPCD_IN == LW)
+            if(STATE == READ && OPCD_IN == LW && OPT_BIT_IN == 1)
                 DATA <= MEM_DATA;
+            else
+                DATA <= ALU_OUT;
         end
     end
 
     // DS
     always @ (STATE) begin
-        case(STATE)
-            IDLE: begin
-                DATA_OUT = 0;
-                MEM_DATA_ADDR = 0;
-                OPCD_OUT = 0;
-                ADDR_REG_OUT = 0;
-                OPT_BIT_OUT = 0;
-                MEM_DATA_CLK_READ = 0;
-                MEM_DATA_CLK_WRITE = 0;
-            end
-            PREPARE_READ: begin
-                DATA_OUT = DATA;
-                MEM_DATA_ADDR = ALU_OUT;
-                OPCD_OUT = OPCD_IN;
-                ADDR_REG_OUT = ADDR_REG_IN;
-                OPT_BIT_OUT = OPT_BIT_IN;
-                MEM_DATA_CLK_READ = 0;
-                MEM_DATA_CLK_WRITE = 0;
-            end
-            READ_CLOCK: begin
-                DATA_OUT = DATA;
-                MEM_DATA_ADDR = ALU_OUT;
-                OPCD_OUT = OPCD_IN;
-                ADDR_REG_OUT = ADDR_REG_IN;
-                OPT_BIT_OUT = OPT_BIT_IN;
-                if(OPCD_IN == LW)
-                    MEM_DATA_CLK_READ = 1;
-                else
+        // se nao tiver em reset
+        if(RST) begin
+            case(STATE)
+                IDLE: begin
+                    DATA_OUT = 0;
+                    MEM_DATA_ADDR = 0;
+                    OPCD_OUT = 0;
+                    ADDR_REG_OUT = 0;
+                    OPT_BIT_OUT = 0;
                     MEM_DATA_CLK_READ = 0;
-                MEM_DATA_CLK_WRITE = 0;
-            end
-            READ: begin
-                DATA_OUT = DATA;
-                MEM_DATA_ADDR = ALU_OUT;
-                OPCD_OUT = OPCD_IN;
-                ADDR_REG_OUT = ADDR_REG_IN;
-                OPT_BIT_OUT = OPT_BIT_IN;
-                MEM_DATA_CLK_READ = 0;
-                MEM_DATA_CLK_WRITE = 0;
-            end
-            PREPARE_WRITE: begin
-                DATA_OUT = DATA;
-                MEM_DATA_ADDR = ALU_OUT;
-                OPCD_OUT = OPCD_IN;
-                ADDR_REG_OUT = ADDR_REG_IN;
-                OPT_BIT_OUT = OPT_BIT_IN;
-                MEM_DATA_CLK_READ = 0;
-                MEM_DATA_CLK_WRITE = 0;
-            end
-            WRITE: begin
-                DATA_OUT = DATA;
-                MEM_DATA_ADDR = ALU_OUT;
-                OPCD_OUT = OPCD_IN;
-                ADDR_REG_OUT = ADDR_REG_IN;
-                OPT_BIT_OUT = OPT_BIT_IN;
-                MEM_DATA_CLK_READ = 0;
-                if(OPCD_IN == SW)
-                    MEM_DATA_CLK_WRITE = 1;
-                else
                     MEM_DATA_CLK_WRITE = 0;
-            end
-            VAZIO_0: begin
-                DATA_OUT = DATA;
-                MEM_DATA_ADDR = ALU_OUT;
-                OPCD_OUT = OPCD_IN;
-                ADDR_REG_OUT = ADDR_REG_IN;
-                OPT_BIT_OUT = OPT_BIT_IN;
-                MEM_DATA_CLK_READ = 0;
-                MEM_DATA_CLK_WRITE = 0;
-            end
-            default: begin
-                DATA_OUT = DATA;
-                MEM_DATA_ADDR = ALU_OUT;
-                OPCD_OUT = OPCD_IN;
-                ADDR_REG_OUT = ADDR_REG_IN;
-                OPT_BIT_OUT = OPT_BIT_IN;
-                MEM_DATA_CLK_READ = 0;
-                MEM_DATA_CLK_WRITE = 0;
-            end
-        endcase
+                end
+                PREPARE_READ: begin
+                    DATA_OUT = DATA;
+                    MEM_DATA_ADDR = ALU_OUT;
+                    OPCD_OUT = OPCD_IN;
+                    ADDR_REG_OUT = ADDR_REG_IN;
+                    OPT_BIT_OUT = OPT_BIT_IN;
+                    MEM_DATA_CLK_READ = 0;
+                    MEM_DATA_CLK_WRITE = 0;
+                end
+                READ_CLOCK: begin
+                    DATA_OUT = DATA;
+                    MEM_DATA_ADDR = ALU_OUT;
+                    OPCD_OUT = OPCD_IN;
+                    ADDR_REG_OUT = ADDR_REG_IN;
+                    OPT_BIT_OUT = OPT_BIT_IN;
+                    if(OPCD_IN == LW && OPT_BIT_IN == 1)
+                        MEM_DATA_CLK_READ = 1;
+                    else
+                        MEM_DATA_CLK_READ = 0;
+                    MEM_DATA_CLK_WRITE = 0;
+                end
+                READ: begin
+                    DATA_OUT = DATA;
+                    MEM_DATA_ADDR = ALU_OUT;
+                    OPCD_OUT = OPCD_IN;
+                    ADDR_REG_OUT = ADDR_REG_IN;
+                    OPT_BIT_OUT = OPT_BIT_IN;
+                    MEM_DATA_CLK_READ = 0;
+                    MEM_DATA_CLK_WRITE = 0;
+                end
+                PREPARE_WRITE: begin
+                    DATA_OUT = DATA;
+                    MEM_DATA_ADDR = ALU_OUT;
+                    OPCD_OUT = OPCD_IN;
+                    ADDR_REG_OUT = ADDR_REG_IN;
+                    OPT_BIT_OUT = OPT_BIT_IN;
+                    MEM_DATA_CLK_READ = 0;
+                    MEM_DATA_CLK_WRITE = 0;
+                end
+                WRITE: begin
+                    DATA_OUT = DATA;
+                    MEM_DATA_ADDR = ALU_OUT;
+                    OPCD_OUT = OPCD_IN;
+                    ADDR_REG_OUT = ADDR_REG_IN;
+                    OPT_BIT_OUT = OPT_BIT_IN;
+                    MEM_DATA_CLK_READ = 0;
+                    if(OPCD_IN == SW)
+                        MEM_DATA_CLK_WRITE = 1;
+                    else
+                        MEM_DATA_CLK_WRITE = 0;
+                end
+                VAZIO_0: begin
+                    DATA_OUT = DATA;
+                    MEM_DATA_ADDR = ALU_OUT;
+                    OPCD_OUT = OPCD_IN;
+                    ADDR_REG_OUT = ADDR_REG_IN;
+                    OPT_BIT_OUT = OPT_BIT_IN;
+                    MEM_DATA_CLK_READ = 0;
+                    MEM_DATA_CLK_WRITE = 0;
+                end
+                default: begin
+                    DATA_OUT = DATA;
+                    MEM_DATA_ADDR = ALU_OUT;
+                    OPCD_OUT = OPCD_IN;
+                    ADDR_REG_OUT = ADDR_REG_IN;
+                    OPT_BIT_OUT = OPT_BIT_IN;
+                    MEM_DATA_CLK_READ = 0;
+                    MEM_DATA_CLK_WRITE = 0;
+                end
+            endcase
+        end
+        
     end
 
 endmodule

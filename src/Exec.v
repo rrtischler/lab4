@@ -1,11 +1,11 @@
-module Exec(ALU_OUT, OPCD_OUT, ADDR_REG, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B, IMM, OPCD_IN, CLK, RST, OPT_BIT_IN);
+module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B, IMM, OPCD_IN, ADDR_REG_IN, CLK, RST, OPT_BIT_IN);
 
     output reg [31:0] ALU_OUT;
-    output reg [4:0] OPCD_OUT, ADDR_REG;
+    output reg [4:0] OPCD_OUT, ADDR_REG_OUT;
     output reg OPT_BIT_OUT, COND;
 
     input [15:0] NPC_IN, REG_A, REG_B, IMM;
-    input [4:0] OPCD_IN;
+    input [4:0] OPCD_IN, ADDR_REG_IN;
     input CLK, RST, OPT_BIT_IN;
 
     reg [4:0] RFLAGS;
@@ -41,8 +41,8 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B
                 NOP 	= 5'b01111;
 
     // ULA
-    assign ALU_OUT = (OPCD_IN == LW)    ? REG_B + IMM
-                   : (OPCD_IN == SW)    ? REG_B + IMM
+    assign ALU_OUT = (OPCD_IN == LW)    ? REG_B + IMM // precisa para valor de memoria regB + Imm
+                   : (OPCD_IN == SW)    ? REG_B + IMM // precisa para valor de memoria regB + Imm
                    : (OPCD_IN == ADD)   ? REG_A + REG_B
                    : (OPCD_IN == SUB)   ? REG_A - REG_B
                    : (OPCD_IN == MUL)   ? REG_A * REG_B
@@ -64,9 +64,9 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B
             NEXT_STATE = IDLE;
         end
         else begin
-            case(STATE)output reg [31:0] ALU_OUT;
-                IDLE: NEXT_STA    output reg [4:0] OPCD_OUT, ADDR_REG;TE = CALCULA_ULA_1;
-                CALCULA_ULA_1:    output reg OPT_BIT_OUT, COND; NEXT_STATE = CALCULA_ULA_2;
+            case(STATE)
+                IDLE: NEXT_STATE = CALCULA_ULA_1;
+                CALCULA_ULA_1: NEXT_STATE = CALCULA_ULA_2;
                 CALCULA_ULA_2: NEXT_STATE = CALCULA_ULA_3;
                 CALCULA_ULA_3: NEXT_STATE = SEND;
                 SEND: NEXT_STATE = BRANCH_JUMP;
@@ -87,7 +87,6 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B
             // defaults
             STATE <= NEXT_STATE;
             RFLAGS <= RFLAGS;
-            // states (OPCD_IN)
             // if(STATE == CALCULA_ULA_1 ||
             //    STATE == CALCULA_ULA_2 ||
             //    STATE == CALCULA_ULA_3) begin
@@ -107,62 +106,65 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B
 
     // DS
     always @ (STATE) begin
-        case(STATE)
-            IDLE: begin
-                OPCD_OUT = 0;
-                ADDR_REG = 0;
-                OPT_BIT_OUT = 0;
-                COND = 0;
-            end
-            CALCULA_ULA_1: begin
-                OPCD_OUT = 0;
-                ADDR_REG = 0;
-                OPT_BIT_OUT = 0;
-                COND = 0;
-            end
-            CALCULA_ULA_2: begin
-                OPCD_OUT = 0;
-                ADDR_REG = 0;
-                OPT_BIT_OUT = 0;
-                COND = 0;
-            end
-            CALCULA_ULA_3: begin
-                OPCD_OUT = 0;
-                ADDR_REG = 0;
-                OPT_BIT_OUT = 0;
-                COND = 0;
-            end
-            SEND: begin
-                OPCD_OUT = OPCD_IN;
-                ADDR_REG = REG_A;
-                OPT_BIT_OUT = OPT_BIT_IN;
-                COND = 0;
-            end
-            BRANCH_JUMP: begin
-                OPCD_OUT = OPCD_IN;
-                ADDR_REG = 0;
-                OPT_BIT_OUT = OPT_BIT_IN;
-                if(OPCD_IN == JR ||
-                   OPCD_IN == JPC)
-                    COND = 1;
-                else if (OPCD_IN == BRLF && RFLAGS[REG_B] == OPT_BIT_IN)
-                    COND = 1;
-                else
+        // se nao tiver em reset
+        if(RST) begin
+            case(STATE)
+                IDLE: begin
+                    OPCD_OUT = 0;
+                    ADDR_REG_OUT = 0;
+                    OPT_BIT_OUT = 0;
                     COND = 0;
-            end
-            VAZIO_0: begin
-                OPCD_OUT = 0;
-                ADDR_REG = 0;
-                OPT_BIT_OUT = 0;
-                COND = 0;
-            end
-            default: begin
-                OPCD_OUT = 0;
-                ADDR_REG = 0;
-                OPT_BIT_OUT = 0;
-                COND = 0;
-            end
-        endcase
+                end
+                CALCULA_ULA_1: begin
+                    OPCD_OUT = 0;
+                    ADDR_REG_OUT = 0;
+                    OPT_BIT_OUT = 0;
+                    COND = 0;
+                end
+                CALCULA_ULA_2: begin
+                    OPCD_OUT = 0;
+                    ADDR_REG_OUT = 0;
+                    OPT_BIT_OUT = 0;
+                    COND = 0;
+                end
+                CALCULA_ULA_3: begin
+                    OPCD_OUT = 0;
+                    ADDR_REG_OUT = 0;
+                    OPT_BIT_OUT = 0;
+                    COND = 0;
+                end
+                SEND: begin
+                    OPCD_OUT = OPCD_IN;
+                    ADDR_REG_OUT = ADDR_REG_IN;
+                    OPT_BIT_OUT = OPT_BIT_IN;
+                    COND = 0;
+                end
+                BRANCH_JUMP: begin
+                    OPCD_OUT = OPCD_IN;
+                    ADDR_REG_OUT = 0;
+                    OPT_BIT_OUT = OPT_BIT_IN;
+                    if(OPCD_IN == JR ||
+                    OPCD_IN == JPC)
+                        COND = 1;
+                    else if (OPCD_IN == BRLF && RFLAGS[REG_B] == OPT_BIT_IN)
+                        COND = 1;
+                    else
+                        COND = 0;
+                end
+                VAZIO_0: begin
+                    OPCD_OUT = 0;
+                    ADDR_REG_OUT = 0;
+                    OPT_BIT_OUT = 0;
+                    COND = 0;
+                end
+                default: begin
+                    OPCD_OUT = 0;
+                    ADDR_REG_OUT = 0;
+                    OPT_BIT_OUT = 0;
+                    COND = 0;
+                end
+            endcase
+        end
     end
 
 endmodule

@@ -1,4 +1,4 @@
-module WriteBack()
+module WriteBack(DATA_OUT, ADDR_REG_OUT, COND, DATA_IN, OPCD_IN, ADDR_REG_IN, OPT_BIT_IN)
 
     output reg [15:0] DATA_OUT;
     output reg [4:0] ADDR_REG_OUT;
@@ -18,7 +18,7 @@ module WriteBack()
               VAZIO_1 = 3,
               VAZIO_2 = 4,
               VAZIO_3 = 5,
-              VAZIO_4 = 6,
+              VAZIO_4 = 6;
 
     parameter	LW 		= 5'b00000,
                 SW 		= 5'b00001,
@@ -71,84 +71,23 @@ module WriteBack()
 
     // DS
     always @ (STATE) begin
-        case(STATE)
-            IDLE: begin
-                DATA_OUT = 0;
-                ADDR_REG_OUT = 0;
+        // se nao tiver em reset
+        if(RST) begin
+            DATA_OUT = DATA_IN;
+            ADDR_REG_OUT = ADDR_REG_IN;
+            if(OPCD_IN == LW ||
+                OPCD_IN == SW ||
+                OPCD_IN == ADD ||
+                OPCD_IN == SUB ||
+                OPCD_IN == MUL ||
+                OPCD_IN == DIV ||
+                OPCD_IN == AND ||
+                OPCD_IN == OR ||
+                OPCD_IN == NOT)
+                COND = 1;
+            else
                 COND = 0;
-            end
-            WRITE_BACK: begin
-                if(OPCD_IN == LW) begin
-                    DATA_OUT = DATA_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    COND = 1;
-                end else begin
-                    DATA_OUT = 0;
-                    ADDR_REG_OUT = 0;
-                    COND = 0;
-                end
-            end
-            VAZIO_0: begin
-                if(OPCD_IN == LW) begin
-                    DATA_OUT = DATA_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    COND = 1;
-                end else begin
-                    DATA_OUT = 0;
-                    ADDR_REG_OUT = 0;
-                    COND = 0;
-                end
-            end
-            VAZIO_1: begin
-                if(OPCD_IN == LW) begin
-                    DATA_OUT = DATA_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    COND = 1;
-                end else begin
-                    DATA_OUT = 0;
-                    ADDR_REG_OUT = 0;
-                    COND = 0;
-                end
-            end
-            VAZIO_2: begin
-                if(OPCD_IN == LW) begin
-                    DATA_OUT = DATA_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    COND = 1;
-                end else begin
-                    DATA_OUT = 0;
-                    ADDR_REG_OUT = 0;
-                    COND = 0;
-                end
-            end
-            VAZIO_3: begin
-                if(OPCD_IN == LW) begin
-                    DATA_OUT = DATA_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    COND = 1;
-                end else begin
-                    DATA_OUT = 0;
-                    ADDR_REG_OUT = 0;
-                    COND = 0;
-                end
-            end
-            VAZIO_4: begin
-                if(OPCD_IN == LW) begin
-                    DATA_OUT = DATA_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    COND = 1;
-                end else begin
-                    DATA_OUT = 0;
-                    ADDR_REG_OUT = 0;
-                    COND = 0;
-                end
-            end
-            default: begin
-                DATA_OUT = 0;
-                ADDR_REG_OUT = 0;
-                COND = 0;
-            end
-        endcase
+        end
     end
 
 endmodule

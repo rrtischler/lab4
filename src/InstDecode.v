@@ -1,12 +1,13 @@
-module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT, COND_WB, RD_WB, MEM_ACC_OUT, EXE_OUT);
+module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT, COND_WB, RD_WB, MEM_ACC_OUT, EXE_OUT, ADDR_REG);
 
     output reg [15:0] REG_A, REG_B, IMM, NPC_OUT;
     output reg [5:0] OPCD;
+    output reg [4:0] ADDR_REG;
     // output reg [4:0] RD; // ???
 
     input RST, CLK;
     input [31:0] IR; // [31:27]: opcode, [26]: extra bit, [25:21]: Ra, [20:16]: Rb, [15:0]: Imm
-    input [15:0] NPC_IN, MEM_ACC_OUT, EXE_OUT, WB_OUT;
+    input [15:0] NPC_IN, MEM_ACC_OUT, EXE_OUT, WB_OUT; // MEM_ACC_OUT, EXE_OUT, WB_OUT: tratamento de hazards
     input [4:0] RD_WB;
     input COND_WB;
 
@@ -147,107 +148,118 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
 
     // DS
     always @(*) begin
-        case(STATE)
-            IDLE: begin
-                REG_A = 0
-                REG_B = 0
-                IMM = 0
-                NPC_OUT = 0
-                OPCD = 0
-            end
-            WAIT_WB: begin
-                REG_A = 0
-                REG_B = 0
-                IMM = 0
-                NPC_OUT = 0
-                OPCD = 0
-            end
-            WB_WRTING: begin
-                REG_A = 0
-                REG_B = 0
-                IMM = 0
-                NPC_OUT = 0
-                OPCD = 0
-            end
-            VAZIO_0: begin
-                REG_A = 0
-                REG_B = 0
-                IMM = 0
-                NPC_OUT = 0
-                OPCD = 0
-            end
-            VAZIO_1: begin
-                REG_A = 0
-                REG_B = 0
-                IMM = 0
-                NPC_OUT = 0
-                OPCD = 0
-            end
-            READ_SEND: begin
-                REG_A = 0;
-                // casos em que existe um regA
-                if(IR[31:27] == LW || 
-                   IR[31:27] == SW || 
-                   IR[31:27] == ADD || 
-                   IR[31:27] == SUB || 
-                   IR[31:27] == MUL || 
-                   IR[31:27] == DIV || 
-                   IR[31:27] == AND || 
-                   IR[31:27] == OR || 
-                   IR[31:27] == CMP || 
-                   IR[31:27] == NOT || 
-                   IR[31:27] == JR || 
-                   IR[31:27] == BRLF || 
-                   IR[31:27] == CALL) begin
-                        // saber onde procurar o regA
-                        case(ARR_FLAG_REG[IR[25:21]])
-                            0: REG_A = ARR_REG[IR[25:21]]; // caso padrao
-                            1: REG_A = WB_OUT;
-                            2: REG_A = MEM_ACC_OUT;
-                            3: REG_A = EXE_OUT;
-                        endcase
+        // se nao tiver em reset
+        if(RST) begin
+            case(STATE)
+                IDLE: begin
+                    REG_A = 0;
+                    REG_B = 0;
+                    IMM = 0;
+                    NPC_OUT = 0;
+                    OPCD = 0;
+                    ADDR_REG = 0;
                 end
+                WAIT_WB: begin
+                    REG_A = 0;
+                    REG_B = 0;
+                    IMM = 0;
+                    NPC_OUT = 0;
+                    OPCD = 0;
+                    ADDR_REG = 0;
+                end
+                WB_WRTING: begin
+                    REG_A = 0;
+                    REG_B = 0;
+                    IMM = 0;
+                    NPC_OUT = 0;
+                    OPCD = 0;
+                    ADDR_REG = 0;
+                end
+                VAZIO_0: begin
+                    REG_A = 0;
+                    REG_B = 0;
+                    IMM = 0;
+                    NPC_OUT = 0;
+                    OPCD = 0;
+                    ADDR_REG = 0;
+                end
+                VAZIO_1: begin
+                    REG_A = 0;
+                    REG_B = 0;
+                    IMM = 0;
+                    NPC_OUT = 0;
+                    OPCD = 0;
+                    ADDR_REG = 0;
+                end
+                READ_SEND: begin
+                    REG_A = 0;
+                    // casos em que existe um regA
+                    if(IR[31:27] == LW || 
+                    IR[31:27] == SW || 
+                    IR[31:27] == ADD || 
+                    IR[31:27] == SUB || 
+                    IR[31:27] == MUL || 
+                    IR[31:27] == DIV || 
+                    IR[31:27] == AND || 
+                    IR[31:27] == OR || 
+                    IR[31:27] == CMP || 
+                    IR[31:27] == NOT || 
+                    IR[31:27] == JR || 
+                    IR[31:27] == BRLF || 
+                    IR[31:27] == CALL) begin
+                            // saber onde procurar o regA
+                            case(ARR_FLAG_REG[IR[25:21]])
+                                0: REG_A = ARR_REG[IR[25:21]]; // caso padrao
+                                1: REG_A = WB_OUT;
+                                2: REG_A = MEM_ACC_OUT;
+                                3: REG_A = EXE_OUT;
+                            endcase
+                    end
 
-                REG_B = 0;
-                // casos em que existe um regB
-                if((IR[31:27] == LW && IR[26] == 1) || 
-                   IR[31:27] == SW || 
-                   IR[31:27] == ADD || 
-                   IR[31:27] == SUB || 
-                   IR[31:27] == MUL || 
-                   IR[31:27] == DIV || 
-                   IR[31:27] == AND || 
-                   IR[31:27] == OR || 
-                   IR[31:27] == CMP) begin
-                        // saber onde procurar o regB
-                        case(ARR_FLAG_REG[IR[20:16]])
-                            0: REG_A = ARR_REG[IR[20:16]]; // caso padrao
-                            1: REG_A = WB_OUT;
-                            2: REG_A = MEM_ACC_OUT;
-                            3: REG_A = EXE_OUT;
-                        endcase
-                   end
-                if(IR[31:27] == BRLF)
-                    REG_B = IR[20:16]; // i
+                    REG_B = 0;
+                    // casos em que existe um regB
+                    if((IR[31:27] == LW && IR[26] == 1) || 
+                    IR[31:27] == SW || 
+                    IR[31:27] == ADD || 
+                    IR[31:27] == SUB || 
+                    IR[31:27] == MUL || 
+                    IR[31:27] == DIV || 
+                    IR[31:27] == AND || 
+                    IR[31:27] == OR || 
+                    IR[31:27] == CMP) begin
+                            // saber onde procurar o regB
+                            case(ARR_FLAG_REG[IR[20:16]])
+                                0: REG_A = ARR_REG[IR[20:16]]; // caso padrao
+                                1: REG_A = WB_OUT;
+                                2: REG_A = MEM_ACC_OUT;
+                                3: REG_A = EXE_OUT;
+                            endcase
+                    end
+                    if(IR[31:27] == BRLF)
+                        REG_B = IR[20:16]; // i
 
-                IMM = IR[15:0];
-                NPC_OUT = NPC_IN;
-                OPCD = IR[31:27];
-            end
-            D_TABLE: begin
-                REG_A = 0
-                REG_B = 0
-                IMM = 0
-                NPC_OUT = 0
-                OPCD = 0
-            end
-            default: begin
-                REG_A = 0
-                REG_B = 0
-                IMM = 0
-                NPC_OUT = 0
-                OPCD = 0
-            end
-        endcase
+                    IMM = IR[15:0];
+                    NPC_OUT = NPC_IN;
+                    OPCD = IR[31:27];
+                    ADDR_REG = IR[25:21];
+                end
+                D_TABLE: begin
+                    REG_A = 0;
+                    REG_B = 0;
+                    IMM = 0;
+                    NPC_OUT = 0;
+                    OPCD = 0;
+                    ADDR_REG = 0;
+                end
+                default: begin
+                    REG_A = 0;
+                    REG_B = 0;
+                    IMM = 0;
+                    NPC_OUT = 0;
+                    OPCD = 0;
+                    ADDR_REG = 0;
+                end
+            endcase
+        end
     end
 endmodule

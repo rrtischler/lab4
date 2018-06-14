@@ -57,61 +57,64 @@ module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT);
 
     // DS
     always @ (STATE) begin
-        case(STATE)
-            IDLE: begin
-                MEM_CLK = 0;
-                NPC = 0;
-                MEM_ADDR = PC;
-                IR = 0;
-            end
-            PREP_READ: begin
-                MEM_CLK = 1;
-                NPC = 0;
-                MEM_ADDR = PC; 
-                IR = 0;
-            end
-            READ_SEND: begin
-                MEM_CLK = 0;
-                NPC = PC;
-                MEM_ADDR = 0;
-                IR = MEM_OUT;
-            end
-            VAZIO_0: begin
-                MEM_CLK = 0;
-                NPC = 0;
-                MEM_ADDR = 0;
-                IR = 0;
-            end
-            VAZIO_1: begin
-                MEM_CLK = 0;
-                NPC = 0;
-                MEM_ADDR = 0;
-                IR = 0;
-            end
-            INC_PC: begin
-                MEM_CLK = 0;
-                NPC = 0;
-                MEM_ADDR = 0;
-                IR = 0;
-            end
-            UPDATE_PC: begin
-                MEM_CLK = 0;
-                NPC = 0;
-                MEM_ADDR = 0;
-                IR = 0;
-            end
-            default: begin
-                MEM_CLK = 0;
-                NPC = 0;
-                MEM_ADDR = 0;
-                IR = 0;
-            end
-            default: begin
-                MEM_CLK = 0;
-                NPC = 0;
-                MEM_ADDR = 0;
-                IR = 0;
-            end
-        endcase
+        // se nao tiver em reset
+        if(RST) begin
+            case(STATE)
+                IDLE: begin
+                    MEM_CLK = 0;
+                    NPC = 0;
+                    MEM_ADDR = PC;
+                    IR = 0;
+                end
+                PREP_READ: begin
+                    MEM_CLK = 1;
+                    NPC = 0;
+                    MEM_ADDR = PC; 
+                    IR = 0;
+                end
+                READ_SEND: begin
+                    MEM_CLK = 0;
+                    NPC = PC;
+                    MEM_ADDR = 0;
+                    IR = MEM_OUT;
+                end
+                VAZIO_0: begin
+                    MEM_CLK = 0;
+                    NPC = 0;
+                    MEM_ADDR = 0;
+                    IR = 0;
+                end
+                VAZIO_1: begin
+                    MEM_CLK = 0;
+                    NPC = 0;
+                    MEM_ADDR = 0;
+                    IR = 0;
+                end
+                INC_PC: begin
+                    MEM_CLK = 0;
+                    NPC = 0;
+                    MEM_ADDR = 0;
+                    IR = 0;
+                end
+                UPDATE_PC: begin
+                    MEM_CLK = 0;
+                    NPC = 0;
+                    MEM_ADDR = 0;
+                    IR = 0;
+                end
+                default: begin
+                    MEM_CLK = 0;
+                    NPC = 0;
+                    MEM_ADDR = 0;
+                    IR = 0;
+                end
+                default: begin
+                    MEM_CLK = 0;
+                    NPC = 0;
+                    MEM_ADDR = 0;
+                    IR = 0;
+                end
+            endcase
+        end
     end
 endmodule

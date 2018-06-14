@@ -1,6 +1,6 @@
 ### conjunto de tipos de instruções
 
-setor 1: transferencia de dados
+# Setor 1: transferencia de dados
 =====================================================================================
 1. 	LW 		00000 0 Rd 00000 	Imm 				(lw somente imediato; Rb = 0)
 2. 	LW 		00000 1 Rd Rb 		Imm 				(para caso só do Rb, Imm será 0)
