@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 2017  Intel Corporation. All rights reserved.
+Copyright (C) 2018  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -103,8 +103,8 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 280 64)
 		(output)
-		(text "OPCD[5..0]" (rect 0 0 47 12)(font "Arial" ))
-		(text "OPCD[5..0]" (rect 212 59 259 71)(font "Arial" ))
+		(text "OPCD[4..0]" (rect 0 0 48 12)(font "Arial" ))
+		(text "OPCD[4..0]" (rect 211 59 259 71)(font "Arial" ))
 		(line (pt 280 64)(pt 264 64)(line_width 3))
 	)
 	(port
@@ -131,9 +131,16 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 280 128)
 		(output)
+		(text "OPT_BIT" (rect 0 0 38 12)(font "Arial" ))
+		(text "OPT_BIT" (rect 221 123 259 135)(font "Arial" ))
+		(line (pt 280 128)(pt 264 128)(line_width 1))
+	)
+	(port
+		(pt 280 144)
+		(output)
 		(text "ESTADO[2..0]" (rect 0 0 61 12)(font "Arial" ))
-		(text "ESTADO[2..0]" (rect 198 123 259 135)(font "Arial" ))
-		(line (pt 280 128)(pt 264 128)(line_width 3))
+		(text "ESTADO[2..0]" (rect 198 139 259 151)(font "Arial" ))
+		(line (pt 280 144)(pt 264 144)(line_width 3))
 	)
 	(parameter
 		"IDLE"
@@ -146,7 +153,7 @@ refer to the applicable agreement for further details.
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
-		"WB_WRTING"
+		"WB_WRITING"
 		"2"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)

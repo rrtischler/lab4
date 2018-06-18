@@ -1,10 +1,11 @@
 module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, WRITE_ENABLE, 
                 MEM_CLK, ALU_OUT, MEM_DATA, OPCD_IN, ADDR_REG_IN, OPT_BIT_IN, RST, CLK, ESTADO);
 
-    output reg [15:0] DATA_OUT;
-    output reg [9:0] MEM_DATA_ADDR;
-    output reg [4:0] OPCD_OUT, ADDR_REG_OUT;
-    output reg OPT_BIT_OUT, WRITE_ENABLE, MEM_CLK;
+    output [15:0] DATA_OUT;
+    output [9:0] MEM_DATA_ADDR;
+    output [4:0] OPCD_OUT, ADDR_REG_OUT;
+    output reg WRITE_ENABLE, MEM_CLK;
+    output OPT_BIT_OUT;
 
     output [2:0] ESTADO;
 
@@ -46,23 +47,25 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, WRIT
     // debug
     assign ESTADO = STATE;
     
+    assign DATA_OUT = DATA;
+    assign MEM_DATA_ADDR = ALU_OUT;
+    assign OPCD_OUT = OPCD_IN;
+    assign ADDR_REG_OUT = ADDR_REG_IN;
+    assign OPT_BIT_OUT = OPT_BIT_IN;
+
     // DPE
-    always @ (STATE) begin
-        if(!RST) begin
-            NEXT_STATE = IDLE;
-        end
-        else begin
-            case(STATE)
-                IDLE: NEXT_STATE = PREPARE_READ;
-                PREPARE_READ: NEXT_STATE = READ_CLOCK;
-                READ_CLOCK: NEXT_STATE = READ;
-                READ: NEXT_STATE = PREPARE_WRITE;
-                PREPARE_WRITE: NEXT_STATE = WRITE;
-                WRITE: NEXT_STATE = VAZIO_0;
-                VAZIO_0: NEXT_STATE = PREPARE_READ;
-                default: NEXT_STATE = IDLE;
-            endcase
-        end
+    always @ (*) begin
+        NEXT_STATE = STATE;
+        case(STATE)
+            IDLE: NEXT_STATE = PREPARE_READ;
+            PREPARE_READ: NEXT_STATE = READ_CLOCK;
+            READ_CLOCK: NEXT_STATE = READ;
+            READ: NEXT_STATE = PREPARE_WRITE;
+            PREPARE_WRITE: NEXT_STATE = WRITE;
+            WRITE: NEXT_STATE = VAZIO_0;
+            VAZIO_0: NEXT_STATE = PREPARE_READ;
+            default: NEXT_STATE = IDLE;
+        endcase
     end
 
     // MEM
@@ -84,99 +87,22 @@ module MemAcc(DATA_OUT, MEM_DATA_ADDR, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, WRIT
     end
 
     // DS
-    always @ (STATE) begin
-        // se nao tiver em reset
-        if(RST) begin
-            case(STATE)
-                IDLE: begin
-                    DATA_OUT = 0;
-                    MEM_DATA_ADDR = 0;
-                    OPCD_OUT = 0;
-                    ADDR_REG_OUT = 0;
-                    OPT_BIT_OUT = 0;
-                    WRITE_ENABLE = 0;
-                    MEM_CLK = 0;
-                end
-                PREPARE_READ: begin
-                    DATA_OUT = DATA;
-                    MEM_DATA_ADDR = ALU_OUT;
-                    OPCD_OUT = OPCD_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    OPT_BIT_OUT = OPT_BIT_IN;
-                    WRITE_ENABLE = 0;
-                    MEM_CLK = 0;
-                end
-                READ_CLOCK: begin
-                    DATA_OUT = DATA;
-                    MEM_DATA_ADDR = ALU_OUT;
-                    OPCD_OUT = OPCD_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    OPT_BIT_OUT = OPT_BIT_IN;
-                    WRITE_ENABLE = 0;
-                    MEM_CLK = 0;
-                    if(OPCD_IN == LW && OPT_BIT_IN == 1)
-                        MEM_CLK = 1;
-                end
-                READ: begin
-                    DATA_OUT = DATA;
-                    MEM_DATA_ADDR = ALU_OUT;
-                    OPCD_OUT = OPCD_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    OPT_BIT_OUT = OPT_BIT_IN;
-                    WRITE_ENABLE = 0;
-                    MEM_CLK = 0;
-                end
-                PREPARE_WRITE: begin
-                    DATA_OUT = DATA;
-                    MEM_DATA_ADDR = ALU_OUT;
-                    OPCD_OUT = OPCD_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    OPT_BIT_OUT = OPT_BIT_IN;
-                    WRITE_ENABLE = 0;
-                    MEM_CLK = 0;
-                    if(OPCD_IN == SW)
-                        WRITE_ENABLE = 1;
-                end
-                WRITE: begin
-                    DATA_OUT = DATA;
-                    MEM_DATA_ADDR = ALU_OUT;
-                    OPCD_OUT = OPCD_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    OPT_BIT_OUT = OPT_BIT_IN;
-                    WRITE_ENABLE = WRITE_ENABLE;
-                    MEM_CLK = 0;
-                    if(OPCD_IN == SW)
-                        MEM_CLK = 1;
-                end
-                VAZIO_0: begin
-                    DATA_OUT = DATA;
-                    MEM_DATA_ADDR = ALU_OUT;
-                    OPCD_OUT = OPCD_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    OPT_BIT_OUT = OPT_BIT_IN;
-                    WRITE_ENABLE = 0;
-                    MEM_CLK = 0;
-                end
-                default: begin
-                    DATA_OUT = DATA;
-                    MEM_DATA_ADDR = ALU_OUT;
-                    OPCD_OUT = OPCD_IN;
-                    ADDR_REG_OUT = ADDR_REG_IN;
-                    OPT_BIT_OUT = OPT_BIT_IN;
-                    WRITE_ENABLE = 0;
-                    MEM_CLK = 0;
-                end
-            endcase
-        end
-        else begin
-            DATA_OUT = 0;
-            MEM_DATA_ADDR = 0;
-            OPCD_OUT = 0;
-            ADDR_REG_OUT = 0;
-            OPT_BIT_OUT = 0;
-            WRITE_ENABLE = 0;
-            MEM_CLK = 0;
-        end
+    always @ (*) begin
+        WRITE_ENABLE = 0;
+        MEM_CLK = 0;
+        case(STATE)
+            READ_CLOCK: begin
+                if(OPCD_IN == LW && OPT_BIT_IN == 1)
+                    MEM_CLK = 1;
+            end
+            PREPARE_WRITE: begin
+                if(OPCD_IN == SW)
+                    WRITE_ENABLE = 1;
+            end
+            default: begin
+                WRITE_ENABLE = 0;
+                MEM_CLK = 0;
+            end
+        endcase
     end
-
 endmodule

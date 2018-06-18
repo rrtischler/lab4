@@ -1,7 +1,7 @@
 module WriteBack(DATA_OUT, ADDR_REG_OUT, COND, DATA_IN, OPCD_IN, ADDR_REG_IN, OPT_BIT_IN, RST, CLK, ESTADO);
 
-    output reg [15:0] DATA_OUT;
-    output reg [4:0] ADDR_REG_OUT;
+    output [15:0] DATA_OUT;
+    output [4:0] ADDR_REG_OUT;
     output reg COND;
 
     output [2:0] ESTADO;
@@ -42,23 +42,22 @@ module WriteBack(DATA_OUT, ADDR_REG_OUT, COND, DATA_IN, OPCD_IN, ADDR_REG_IN, OP
     // debug
     assign ESTADO = STATE;
     
+    assign DATA_OUT = DATA_IN;
+    assign ADDR_REG_OUT = ADDR_REG_IN;
+    
     // DPE
-    always @ (STATE) begin
-        if(!RST) begin
-            NEXT_STATE = IDLE;
-        end
-        else begin
-            case(STATE)
-                IDLE: NEXT_STATE = WRITE_BACK;
-                WRITE_BACK: NEXT_STATE = VAZIO_0;
-                VAZIO_0: NEXT_STATE = VAZIO_1;
-                VAZIO_1: NEXT_STATE = VAZIO_2;
-                VAZIO_2: NEXT_STATE = VAZIO_3;
-                VAZIO_3: NEXT_STATE = VAZIO_4;
-                VAZIO_4: NEXT_STATE = WRITE_BACK;
-                default: NEXT_STATE = IDLE;
-            endcase
-        end
+    always @ (*) begin
+        NEXT_STATE = STATE;
+        case(STATE)
+            IDLE: NEXT_STATE = WRITE_BACK;
+            WRITE_BACK: NEXT_STATE = VAZIO_0;
+            VAZIO_0: NEXT_STATE = VAZIO_1;
+            VAZIO_1: NEXT_STATE = VAZIO_2;
+            VAZIO_2: NEXT_STATE = VAZIO_3;
+            VAZIO_3: NEXT_STATE = VAZIO_4;
+            VAZIO_4: NEXT_STATE = WRITE_BACK;
+            default: NEXT_STATE = IDLE;
+        endcase
     end
 
     // MEM
@@ -72,29 +71,19 @@ module WriteBack(DATA_OUT, ADDR_REG_OUT, COND, DATA_IN, OPCD_IN, ADDR_REG_IN, OP
     end
 
     // DS
-    always @ (STATE) begin
-        // se nao tiver em reset
-        if(RST) begin
-            DATA_OUT = DATA_IN;
-            ADDR_REG_OUT = ADDR_REG_IN;
-            if(OPCD_IN == LW ||
-                OPCD_IN == SW ||
-                OPCD_IN == ADD ||
-                OPCD_IN == SUB ||
-                OPCD_IN == MUL ||
-                OPCD_IN == DIV ||
-                OPCD_IN == AND ||
-                OPCD_IN == OR ||
-                OPCD_IN == NOT)
-                COND = 1;
-            else
-                COND = 0;
-        end
-        else begin
-            DATA_OUT = 0;
-            ADDR_REG_OUT = 0;
+    always @ (*) begin
+        if(OPCD_IN == LW ||
+            OPCD_IN == SW ||
+            OPCD_IN == ADD ||
+            OPCD_IN == SUB ||
+            OPCD_IN == MUL ||
+            OPCD_IN == DIV ||
+            OPCD_IN == AND ||
+            OPCD_IN == OR ||
+            OPCD_IN == NOT)
+            COND = 1;
+        else
             COND = 0;
-        end
     end
 
 endmodule

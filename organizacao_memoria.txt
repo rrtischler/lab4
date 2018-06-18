@@ -1,0 +1,6 @@
+organização da memória interna do segmento de dados:
+
+endereço 0 -> call para o endereço 101
+endereços de 1 a 100 -> reservados para interrupção
+endereços 101 a 998 -> código do programa
+endereço 999 -> call para endereço 0

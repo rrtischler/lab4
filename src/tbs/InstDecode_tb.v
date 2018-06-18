@@ -41,30 +41,30 @@ begin
 
 $monitor("TEMPO:%d -- REG_A:%d | REG_B:%d | NPC_OUT:%d | OPCD:%d | ADDR_REG:%d | ESTADO:%d",
 	$time, REG_A, REG_B, IMM, NPC_OUT, OPCD, ADDR_REG, ESTADO);
-    // estados iniciais
-    CLK = 0;
-    RST = 0;
+	 // estados iniciais
+	 CLK = 0;
+	 RST = 0;
 
-    // ---- INICIO ----
-    #20 // clock 1
-    RST = 1; // retira o reset
-    
-    #40 // clock 2
+	 // ---- INICIO ----
+	 #20 // clock 1
+	 RST = 1; // retira o reset
+	 
+	 #40 // clock 2
 
-    #41 // clock 3
+	 #41 // clock 3
 
-    #41 // clock 4
+	 #41 // clock 4
 
-    #41 // clock 5
+	 #41 // clock 5
 
-    #41 // clock 6
+	 #41 // clock 6
 
-    #41 // clock 7
+	 #41 // clock 7
 
-    // etc ...
+	 // etc ...
 
 
-    #2000 $stop;
+	 #2000 $stop;
 end
 
 endmodule

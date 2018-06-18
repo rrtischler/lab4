@@ -1,0 +1,236 @@
+------- line: 0 -------
+opcode: LW
+m1: R27
+m2: 525 (imm)
+m3: None
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b00000
+opt_bit(bin): 0b0
+ra(bin): 0b11011
+rb(bin): 0b00000
+imm(bin): 0b0000001000001101
+------- line: 1 -------
+opcode: LW
+m1: R27
+m2: 10 (imm)
+m3: (R10)
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b00000
+opt_bit(bin): 0b1
+ra(bin): 0b11011
+rb(bin): 0b01010
+imm(bin): 0b0000000000001010
+------- line: 2 -------
+opcode: LW
+m1: R27
+m2: None (imm)
+m3: (R10)
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b00000
+opt_bit(bin): 0b1
+ra(bin): 0b11011
+rb(bin): 0b01010
+imm(bin): 0b0000000000000000
+------- line: 3 -------
+opcode: SW
+m1: R27
+m2: 10 (imm)
+m3: (R10)
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b00001
+opt_bit(bin): 0b0
+ra(bin): 0b11011
+rb(bin): 0b01010
+imm(bin): 0b0000000000001010
+------- line: 4 -------
+opcode: SW
+m1: R27
+m2: None (imm)
+m3: (R10)
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b00001
+opt_bit(bin): 0b0
+ra(bin): 0b11011
+rb(bin): 0b01010
+imm(bin): 0b0000000000000000
+------- line: 5 -------
+opcode: ADD
+m1: R7
+m2: None (imm)
+m3: None
+m4: R8
+m5: None
+## result: ##
+opcode(bin): 0b00010
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b01000
+imm(bin): 0b0000000000000000
+------- line: 6 -------
+opcode: SUB
+m1: R7
+m2: None (imm)
+m3: None
+m4: R8
+m5: None
+## result: ##
+opcode(bin): 0b00011
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b01000
+imm(bin): 0b0000000000000000
+------- line: 7 -------
+opcode: MUL
+m1: R7
+m2: None (imm)
+m3: None
+m4: R8
+m5: None
+## result: ##
+opcode(bin): 0b00100
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b01000
+imm(bin): 0b0000000000000000
+------- line: 8 -------
+opcode: DIV
+m1: R7
+m2: None (imm)
+m3: None
+m4: R8
+m5: None
+## result: ##
+opcode(bin): 0b00101
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b01000
+imm(bin): 0b0000000000000000
+------- line: 9 -------
+opcode: AND
+m1: R7
+m2: None (imm)
+m3: None
+m4: R8
+m5: None
+## result: ##
+opcode(bin): 0b00110
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b01000
+imm(bin): 0b0000000000000000
+------- line: 10 -------
+opcode: OR
+m1: R7
+m2: None (imm)
+m3: None
+m4: R8
+m5: None
+## result: ##
+opcode(bin): 0b00111
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b01000
+imm(bin): 0b0000000000000000
+------- line: 11 -------
+opcode: CMP
+m1: R7
+m2: None (imm)
+m3: None
+m4: R8
+m5: None
+## result: ##
+opcode(bin): 0b01000
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b01000
+imm(bin): 0b0000000000000000
+------- line: 12 -------
+opcode: NOT
+m1: R7
+m2: None (imm)
+m3: None
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b01001
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b00000
+imm(bin): 0b0000000000000000
+------- line: 13 -------
+opcode: JR
+m1: R7
+m2: None (imm)
+m3: None
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b01010
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b00000
+imm(bin): 0b0000000000000000
+------- line: 14 -------
+opcode: JPC
+m1: 885
+m2: None (imm)
+m3: None
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b01011
+opt_bit(bin): 0b0
+ra(bin): 0b1010101
+rb(bin): 0b00000
+imm(bin): 0b0000000000000000
+------- line: 15 -------
+opcode: BRFL
+m1: R7
+m2: None (imm)
+m3: None
+m4: EQ
+m5: ,0
+## result: ##
+opcode(bin): 0b01100
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b00000
+imm(bin): 0b0000000000000000
+------- line: 16 -------
+opcode: BRFL
+m1: R7
+m2: None (imm)
+m3: None
+m4: EQ
+m5: ,1
+## result: ##
+opcode(bin): 0b01100
+opt_bit(bin): 0b1
+ra(bin): 0b00111
+rb(bin): 0b00000
+imm(bin): 0b0000000000000000
+------- line: 17 -------
+opcode: CALL
+m1: R7
+m2: None (imm)
+m3: None
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b01101
+opt_bit(bin): 0b0
+ra(bin): 0b00111
+rb(bin): 0b00000
+imm(bin): 0b0000000000000000
+error at line 18: RET
+

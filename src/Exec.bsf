@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 2017  Intel Corporation. All rights reserved.
+Copyright (C) 2018  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -87,6 +87,13 @@ refer to the applicable agreement for further details.
 		(line (pt 0 160)(pt 16 160)(line_width 1))
 	)
 	(port
+		(pt 0 176)
+		(input)
+		(text "INTERRUPT[3..0]" (rect 0 0 77 12)(font "Arial" ))
+		(text "INTERRUPT[3..0]" (rect 21 171 98 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176)(line_width 3))
+	)
+	(port
 		(pt 304 32)
 		(output)
 		(text "ALU_OUT[31..0]" (rect 0 0 70 12)(font "Arial" ))
@@ -128,6 +135,26 @@ refer to the applicable agreement for further details.
 		(text "ESTADO[2..0]" (rect 222 107 283 119)(font "Arial" ))
 		(line (pt 304 112)(pt 288 112)(line_width 3))
 	)
+	(parameter
+		"IN_CALL_0"
+		"1"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"IN_CALL_1"
+		"2"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"IN_CALL_2"
+		"3"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"IN_CALL_3"
+		"4"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
 	(parameter
 		"IDLE"
 		"0"

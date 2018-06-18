@@ -1,7 +1,7 @@
-module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT, ESTADO);
+module InstFetch(IR, NPC, MEM_CLK, MEM_OUT, ULA, RST, CLK, COND, ESTADO);
 
-    output reg [31:0] IR;
-    output reg [15:0] NPC, MEM_ADDR;
+    output [31:0] IR;
+    output [15:0] NPC;
     output reg MEM_CLK;
     
     output [2:0] ESTADO;
@@ -11,6 +11,7 @@ module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT, ESTAD
     input RST, CLK, COND;
 
     reg [15:0] PC;
+    reg [31:0] REG_IR;
 
     reg [2:0] STATE, NEXT_STATE;
     parameter   IDLE = 0,
@@ -23,38 +24,40 @@ module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT, ESTAD
 
     // debug
     assign ESTADO = STATE;
+    
+    assign NPC = PC;
+    assign IR = (STATE == READ_SEND) ? MEM_OUT : REG_IR;
 
     // DPE
-    always @ (STATE) begin
-        if(!RST) begin
-            NEXT_STATE = IDLE;
-        end
-        else begin
-            case(STATE)
-                IDLE: NEXT_STATE = PREP_READ;
-                PREP_READ: NEXT_STATE = READ_SEND;
-                READ_SEND: NEXT_STATE = VAZIO_0;
-                VAZIO_0: NEXT_STATE = VAZIO_1;
-                VAZIO_1: NEXT_STATE = INC_PC;
-                INC_PC: NEXT_STATE = UPDATE_PC;
-                UPDATE_PC: NEXT_STATE = PREP_READ;
-                default: NEXT_STATE = IDLE;
-            endcase
-        end
+    always @ (*) begin
+        case(STATE)
+            IDLE: NEXT_STATE = PREP_READ;
+            PREP_READ: NEXT_STATE = READ_SEND;
+            READ_SEND: NEXT_STATE = VAZIO_0;
+            VAZIO_0: NEXT_STATE = VAZIO_1;
+            VAZIO_1: NEXT_STATE = INC_PC;
+            INC_PC: NEXT_STATE = UPDATE_PC;
+            UPDATE_PC: NEXT_STATE = PREP_READ;
+            default: NEXT_STATE = IDLE;
+        endcase
     end
 
     // MEM
     always @ (posedge CLK) begin
         if(!RST) begin
             PC <= 0;
+            REG_IR <= 0;
             STATE <= IDLE;
         end
         else begin
             STATE <= NEXT_STATE;
             /* defaults */
             PC <= PC;
+            REG_IR <= REG_IR;
             /* state logic */
-            if(STATE == INC_PC)
+            if (STATE == READ_SEND)
+                REG_IR <= MEM_OUT;
+            else if(STATE == INC_PC)
                 PC <= PC + 1;
             else if(STATE == UPDATE_PC && COND)
                 PC <= ULA;
@@ -62,65 +65,10 @@ module InstFetch(NPC, IR, MEM_ADDR, MEM_CLK, RST, CLK, ULA, COND, MEM_OUT, ESTAD
     end
 
     // DS
-    always @ (STATE) begin
-        // se nao tiver em reset
-        if(RST) begin
-            case(STATE)
-                IDLE: begin
-                    MEM_CLK = 0;
-                    NPC = 0;
-                    MEM_ADDR = PC;
-                    IR = 0;
-                end
-                PREP_READ: begin
-                    MEM_CLK = 1;
-                    NPC = 0;
-                    MEM_ADDR = PC; 
-                    IR = 0;
-                end
-                READ_SEND: begin
-                    MEM_CLK = 0;
-                    NPC = PC;
-                    MEM_ADDR = 0;
-                    IR = MEM_OUT;
-                end
-                VAZIO_0: begin
-                    MEM_CLK = 0;
-                    NPC = 0;
-                    MEM_ADDR = 0;
-                    IR = 0;
-                end
-                VAZIO_1: begin
-                    MEM_CLK = 0;
-                    NPC = 0;
-                    MEM_ADDR = 0;
-                    IR = 0;
-                end
-                INC_PC: begin
-                    MEM_CLK = 0;
-                    NPC = 0;
-                    MEM_ADDR = 0;
-                    IR = 0;
-                end
-                UPDATE_PC: begin
-                    MEM_CLK = 0;
-                    NPC = 0;
-                    MEM_ADDR = 0;
-                    IR = 0;
-                end
-                default: begin
-                    MEM_CLK = 0;
-                    NPC = 0;
-                    MEM_ADDR = 0;
-                    IR = 0;
-                end
-            endcase
-        end
-        else begin
-            MEM_CLK = 0;
-            NPC = 0;
-            MEM_ADDR = 0;
-            IR = 0;
-        end
+    always @ (*) begin
+        case(STATE)
+            PREP_READ: MEM_CLK = 1;
+            default: MEM_CLK = 0;
+        endcase
     end
 endmodule
