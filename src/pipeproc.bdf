@@ -1349,262 +1349,6 @@ refer to the applicable agreement for further details.
 	(annotation_block (parameter)(rect -616 -8928 -440 -8816))
 )
 (symbol
-	(rect -1360 -9640 -1056 -9432)
-	(text "Exec" (rect 5 0 30 11)(font "Arial" ))
-	(text "inst10" (rect 8 192 41 205)(font "Intel Clear" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "NPC_IN[15..0]" (rect 0 0 71 11)(font "Arial" ))
-		(text "NPC_IN[15..0]" (rect 21 27 92 38)(font "Arial" ))
-		(line (pt 0 32)(pt 16 32)(line_width 3))
-	)
-	(port
-		(pt 0 48)
-		(input)
-		(text "REG_A[15..0]" (rect 0 0 68 11)(font "Arial" ))
-		(text "REG_A[15..0]" (rect 21 43 89 54)(font "Arial" ))
-		(line (pt 0 48)(pt 16 48)(line_width 3))
-	)
-	(port
-		(pt 0 64)
-		(input)
-		(text "REG_B[15..0]" (rect 0 0 68 11)(font "Arial" ))
-		(text "REG_B[15..0]" (rect 21 59 89 70)(font "Arial" ))
-		(line (pt 0 64)(pt 16 64)(line_width 3))
-	)
-	(port
-		(pt 0 80)
-		(input)
-		(text "IMM[15..0]" (rect 0 0 51 11)(font "Arial" ))
-		(text "IMM[15..0]" (rect 21 75 72 86)(font "Arial" ))
-		(line (pt 0 80)(pt 16 80)(line_width 3))
-	)
-	(port
-		(pt 0 96)
-		(input)
-		(text "OPCD_IN[4..0]" (rect 0 0 74 11)(font "Arial" ))
-		(text "OPCD_IN[4..0]" (rect 21 91 95 102)(font "Arial" ))
-		(line (pt 0 96)(pt 16 96)(line_width 3))
-	)
-	(port
-		(pt 0 112)
-		(input)
-		(text "ADDR_REG_IN[4..0]" (rect 0 0 102 11)(font "Arial" ))
-		(text "ADDR_REG_IN[4..0]" (rect 21 107 123 118)(font "Arial" ))
-		(line (pt 0 112)(pt 16 112)(line_width 3))
-	)
-	(port
-		(pt 0 128)
-		(input)
-		(text "CLK" (rect 0 0 24 11)(font "Arial" ))
-		(text "CLK" (rect 21 123 45 134)(font "Arial" ))
-		(line (pt 0 128)(pt 16 128))
-	)
-	(port
-		(pt 0 144)
-		(input)
-		(text "RST" (rect 0 0 23 11)(font "Arial" ))
-		(text "RST" (rect 21 139 44 150)(font "Arial" ))
-		(line (pt 0 144)(pt 16 144))
-	)
-	(port
-		(pt 0 160)
-		(input)
-		(text "OPT_BIT_IN" (rect 0 0 63 11)(font "Arial" ))
-		(text "OPT_BIT_IN" (rect 21 155 84 166)(font "Arial" ))
-		(line (pt 0 160)(pt 16 160))
-	)
-	(port
-		(pt 0 176)
-		(input)
-		(text "INTERRUPT[3..0]" (rect 0 0 88 11)(font "Arial" ))
-		(text "INTERRUPT[3..0]" (rect 21 171 109 182)(font "Arial" ))
-		(line (pt 0 176)(pt 16 176)(line_width 3))
-	)
-	(port
-		(pt 304 32)
-		(output)
-		(text "ALU_OUT[31..0]" (rect 0 0 81 11)(font "Arial" ))
-		(text "ALU_OUT[31..0]" (rect 215 27 296 38)(font "Arial" ))
-		(line (pt 304 32)(pt 288 32)(line_width 3))
-	)
-	(port
-		(pt 304 48)
-		(output)
-		(text "OPCD_OUT[4..0]" (rect 0 0 86 11)(font "Arial" ))
-		(text "OPCD_OUT[4..0]" (rect 211 43 297 54)(font "Arial" ))
-		(line (pt 304 48)(pt 288 48)(line_width 3))
-	)
-	(port
-		(pt 304 64)
-		(output)
-		(text "ADDR_REG_OUT[4..0]" (rect 0 0 115 11)(font "Arial" ))
-		(text "ADDR_REG_OUT[4..0]" (rect 186 59 301 70)(font "Arial" ))
-		(line (pt 304 64)(pt 288 64)(line_width 3))
-	)
-	(port
-		(pt 304 80)
-		(output)
-		(text "OPT_BIT_OUT" (rect 0 0 76 11)(font "Arial" ))
-		(text "OPT_BIT_OUT" (rect 219 75 295 86)(font "Arial" ))
-		(line (pt 304 80)(pt 288 80))
-	)
-	(port
-		(pt 304 96)
-		(output)
-		(text "COND" (rect 0 0 34 11)(font "Arial" ))
-		(text "COND" (rect 255 91 289 102)(font "Arial" ))
-		(line (pt 304 96)(pt 288 96))
-	)
-	(port
-		(pt 304 112)
-		(output)
-		(text "ESTADO[2..0]" (rect 0 0 70 11)(font "Arial" ))
-		(text "ESTADO[2..0]" (rect 224 107 294 118)(font "Arial" ))
-		(line (pt 304 112)(pt 288 112)(line_width 3))
-	)
-	(parameter
-		"IN_CALL_0"
-		"1"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"IN_CALL_1"
-		"2"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"IN_CALL_2"
-		"3"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"IN_CALL_3"
-		"4"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"IDLE"
-		"0"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"CALCULA_ULA_1"
-		"1"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"CALCULA_ULA_2"
-		"2"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"CALCULA_ULA_3"
-		"3"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"SEND"
-		"4"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"BRANCH_JUMP"
-		"5"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"VAZIO_0"
-		"6"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(parameter
-		"LW"
-		"00000"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"SW"
-		"00001"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"ADD"
-		"00010"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"SUB"
-		"00011"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"MUL"
-		"00100"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"DIV"
-		"00101"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"AND"
-		"00110"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"OR"
-		"00111"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"CMP"
-		"01000"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"NOT"
-		"01001"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"JR"
-		"01010"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"JPC"
-		"01011"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"BRLF"
-		"01100"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"CALL"
-		"01101"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"RET"
-		"01110"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(parameter
-		"NOP"
-		"01111"
-		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
-	(drawing
-		(rectangle (rect 16 16 288 192))
-	)
-	(annotation_block (parameter)(rect -1056 -10064 -840 -9640))
-)
-(symbol
 	(rect -3056 -9312 -2840 -9184)
 	(text "seg_dados" (rect 61 0 140 16)(font "Arial" (font_size 10)))
 	(text "inst12" (rect 177 113 208 126)(font "Intel Clear" ))
@@ -1697,54 +1441,6 @@ refer to the applicable agreement for further details.
 		(line (pt 216 0)(pt 216 0))
 	)
 	(flipy)
-)
-(symbol
-	(rect -3776 -8536 -3488 -8384)
-	(text "pll_buffer" (rect 117 0 184 16)(font "Arial" (font_size 10)))
-	(text "inst11" (rect 8 137 38 148)(font "Arial" ))
-	(port
-		(pt 0 64)
-		(input)
-		(text "inclk0" (rect 0 0 34 13)(font "Arial" (font_size 8)))
-		(text "inclk0" (rect 4 51 38 64)(font "Arial" (font_size 8)))
-		(line (pt 0 64)(pt 40 64))
-	)
-	(port
-		(pt 288 64)
-		(output)
-		(text "c0" (rect 0 0 15 13)(font "Arial" (font_size 8)))
-		(text "c0" (rect 273 51 288 64)(font "Arial" (font_size 8)))
-	)
-	(drawing
-		(text "Cyclone IV E" (rect 215 138 279 149)(font "Arial" ))
-		(text "inclk0 frequency: 25.000 MHz" (rect 50 60 196 71)(font "Arial" ))
-		(text "Operation Mode: Normal" (rect 50 72 172 83)(font "Arial" ))
-		(text "Clk " (rect 51 91 71 102)(font "Arial" ))
-		(text "Ratio" (rect 100 91 127 102)(font "Arial" ))
-		(text "Ph (dg)" (rect 155 91 192 102)(font "Arial" ))
-		(text "DC (%)" (rect 190 91 227 102)(font "Arial" ))
-		(text "c0" (rect 54 104 66 115)(font "Arial" ))
-		(text "4166667/25000000" (rect 71 104 167 115)(font "Arial" ))
-		(text "0.00" (rect 161 104 184 115)(font "Arial" ))
-		(text "50.00" (rect 194 104 223 115)(font "Arial" ))
-		(line (pt 0 0)(pt 289 0))
-		(line (pt 289 0)(pt 289 153))
-		(line (pt 0 153)(pt 289 153))
-		(line (pt 0 0)(pt 0 153))
-		(line (pt 48 89)(pt 222 89))
-		(line (pt 48 101)(pt 222 101))
-		(line (pt 48 114)(pt 222 114))
-		(line (pt 48 89)(pt 48 114))
-		(line (pt 68 89)(pt 68 114)(line_width 3))
-		(line (pt 152 89)(pt 152 114)(line_width 3))
-		(line (pt 187 89)(pt 187 114)(line_width 3))
-		(line (pt 221 89)(pt 221 114))
-		(line (pt 40 48)(pt 255 48))
-		(line (pt 255 48)(pt 255 135))
-		(line (pt 40 135)(pt 255 135))
-		(line (pt 40 48)(pt 40 135))
-		(line (pt 287 64)(pt 255 64))
-	)
 )
 (symbol
 	(rect -2280 -9576 -2000 -9368)
@@ -2102,6 +1798,401 @@ refer to the applicable agreement for further details.
 		(rectangle (rect 16 16 288 160))
 	)
 )
+(symbol
+	(rect -1296 -9368 -1096 -9256)
+	(text "divider_3clock" (rect 5 0 76 11)(font "Arial" ))
+	(text "inst5" (rect 8 96 32 109)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "A[15..0]" (rect 0 0 38 11)(font "Arial" ))
+		(text "A[15..0]" (rect 21 27 59 38)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "B[15..0]" (rect 0 0 38 11)(font "Arial" ))
+		(text "B[15..0]" (rect 21 43 59 54)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "CLK" (rect 0 0 24 11)(font "Arial" ))
+		(text "CLK" (rect 21 59 45 70)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 200 32)
+		(output)
+		(text "RESULT[15..0]" (rect 0 0 74 11)(font "Arial" ))
+		(text "RESULT[15..0]" (rect 117 27 191 38)(font "Arial" ))
+		(line (pt 200 32)(pt 184 32)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 184 96))
+	)
+)
+(symbol
+	(rect -1360 -9640 -1056 -9400)
+	(text "Exec" (rect 5 0 30 11)(font "Arial" ))
+	(text "inst10" (rect 8 224 41 237)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "NPC_IN[15..0]" (rect 0 0 71 11)(font "Arial" ))
+		(text "NPC_IN[15..0]" (rect 21 27 92 38)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "REG_A[15..0]" (rect 0 0 68 11)(font "Arial" ))
+		(text "REG_A[15..0]" (rect 21 43 89 54)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "REG_B[15..0]" (rect 0 0 68 11)(font "Arial" ))
+		(text "REG_B[15..0]" (rect 21 59 89 70)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "IMM[15..0]" (rect 0 0 51 11)(font "Arial" ))
+		(text "IMM[15..0]" (rect 21 75 72 86)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "OPCD_IN[4..0]" (rect 0 0 74 11)(font "Arial" ))
+		(text "OPCD_IN[4..0]" (rect 21 91 95 102)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 3))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "ADDR_REG_IN[4..0]" (rect 0 0 102 11)(font "Arial" ))
+		(text "ADDR_REG_IN[4..0]" (rect 21 107 123 118)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 3))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "CLK" (rect 0 0 24 11)(font "Arial" ))
+		(text "CLK" (rect 21 123 45 134)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "RST" (rect 0 0 23 11)(font "Arial" ))
+		(text "RST" (rect 21 139 44 150)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "OPT_BIT_IN" (rect 0 0 63 11)(font "Arial" ))
+		(text "OPT_BIT_IN" (rect 21 155 84 166)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "INTERRUPT[3..0]" (rect 0 0 88 11)(font "Arial" ))
+		(text "INTERRUPT[3..0]" (rect 21 171 109 182)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176)(line_width 3))
+	)
+	(port
+		(pt 0 192)
+		(input)
+		(text "RESULT_DIV[15..0]" (rect 0 0 99 11)(font "Arial" ))
+		(text "RESULT_DIV[15..0]" (rect 21 187 120 198)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 3))
+	)
+	(port
+		(pt 304 32)
+		(output)
+		(text "ALU_OUT[31..0]" (rect 0 0 81 11)(font "Arial" ))
+		(text "ALU_OUT[31..0]" (rect 215 27 296 38)(font "Arial" ))
+		(line (pt 304 32)(pt 288 32)(line_width 3))
+	)
+	(port
+		(pt 304 48)
+		(output)
+		(text "OPCD_OUT[4..0]" (rect 0 0 86 11)(font "Arial" ))
+		(text "OPCD_OUT[4..0]" (rect 211 43 297 54)(font "Arial" ))
+		(line (pt 304 48)(pt 288 48)(line_width 3))
+	)
+	(port
+		(pt 304 64)
+		(output)
+		(text "ADDR_REG_OUT[4..0]" (rect 0 0 115 11)(font "Arial" ))
+		(text "ADDR_REG_OUT[4..0]" (rect 186 59 301 70)(font "Arial" ))
+		(line (pt 304 64)(pt 288 64)(line_width 3))
+	)
+	(port
+		(pt 304 80)
+		(output)
+		(text "OPT_BIT_OUT" (rect 0 0 76 11)(font "Arial" ))
+		(text "OPT_BIT_OUT" (rect 219 75 295 86)(font "Arial" ))
+		(line (pt 304 80)(pt 288 80))
+	)
+	(port
+		(pt 304 96)
+		(output)
+		(text "COND" (rect 0 0 34 11)(font "Arial" ))
+		(text "COND" (rect 255 91 289 102)(font "Arial" ))
+		(line (pt 304 96)(pt 288 96))
+	)
+	(port
+		(pt 304 112)
+		(output)
+		(text "ESTADO[2..0]" (rect 0 0 70 11)(font "Arial" ))
+		(text "ESTADO[2..0]" (rect 224 107 294 118)(font "Arial" ))
+		(line (pt 304 112)(pt 288 112)(line_width 3))
+	)
+	(parameter
+		"IN_CALL_0"
+		"1"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"IN_CALL_1"
+		"2"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"IN_CALL_2"
+		"3"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"IN_CALL_3"
+		"4"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"IDLE"
+		"0"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"CALCULA_ULA_1"
+		"1"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"CALCULA_ULA_2"
+		"2"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"CALCULA_ULA_3"
+		"3"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"SEND"
+		"4"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"BRANCH_JUMP"
+		"5"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"VAZIO_0"
+		"6"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(parameter
+		"LW"
+		"00000"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"SW"
+		"00001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"ADD"
+		"00010"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"SUB"
+		"00011"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"MUL"
+		"00100"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"DIV"
+		"00101"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"AND"
+		"00110"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"OR"
+		"00111"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"CMP"
+		"01000"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"NOT"
+		"01001"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"JR"
+		"01010"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"JPC"
+		"01011"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"BRLF"
+		"01100"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"CALL"
+		"01101"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"RET"
+		"01110"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(parameter
+		"NOP"
+		"01111"
+		""
+		(type "PARAMETER_UNSIGNED_BIN")	)
+	(drawing
+		(rectangle (rect 16 16 288 224))
+	)
+	(annotation_block (parameter)(rect -1056 -10064 -840 -9640))
+)
+(symbol
+	(rect -1784 -8824 -1544 -8672)
+	(text "plldiv" (rect 105 0 142 16)(font "Arial" (font_size 10)))
+	(text "inst11" (rect 8 137 39 150)(font "Intel Clear" ))
+	(port
+		(pt 0 64)
+		(input)
+		(text "inclk0" (rect 0 0 34 13)(font "Arial" (font_size 8)))
+		(text "inclk0" (rect 4 51 38 64)(font "Arial" (font_size 8)))
+		(line (pt 0 64)(pt 40 64))
+	)
+	(port
+		(pt 240 64)
+		(output)
+		(text "c0" (rect 0 0 15 13)(font "Arial" (font_size 8)))
+		(text "c0" (rect 225 51 240 64)(font "Arial" (font_size 8)))
+	)
+	(drawing
+		(text "Cyclone IV E" (rect 167 138 231 149)(font "Arial" ))
+		(text "inclk0 frequency: 25.000 MHz" (rect 50 60 196 71)(font "Arial" ))
+		(text "Operation Mode: Normal" (rect 50 72 172 83)(font "Arial" ))
+		(text "Clk " (rect 51 91 71 102)(font "Arial" ))
+		(text "Ratio" (rect 71 91 98 102)(font "Arial" ))
+		(text "Ph (dg)" (rect 97 91 134 102)(font "Arial" ))
+		(text "DC (%)" (rect 132 91 169 102)(font "Arial" ))
+		(text "c0" (rect 54 104 66 115)(font "Arial" ))
+		(text "1/2" (rect 76 104 92 115)(font "Arial" ))
+		(text "0.00" (rect 103 104 126 115)(font "Arial" ))
+		(text "50.00" (rect 136 104 165 115)(font "Arial" ))
+		(line (pt 0 0)(pt 241 0))
+		(line (pt 241 0)(pt 241 153))
+		(line (pt 0 153)(pt 241 153))
+		(line (pt 0 0)(pt 0 153))
+		(line (pt 48 89)(pt 164 89))
+		(line (pt 48 101)(pt 164 101))
+		(line (pt 48 114)(pt 164 114))
+		(line (pt 48 89)(pt 48 114))
+		(line (pt 68 89)(pt 68 114)(line_width 3))
+		(line (pt 94 89)(pt 94 114)(line_width 3))
+		(line (pt 129 89)(pt 129 114)(line_width 3))
+		(line (pt 163 89)(pt 163 114))
+		(line (pt 40 48)(pt 207 48))
+		(line (pt 207 48)(pt 207 135))
+		(line (pt 40 135)(pt 207 135))
+		(line (pt 40 48)(pt 40 135))
+		(line (pt 239 64)(pt 207 64))
+	)
+)
+(symbol
+	(rect -3568 -8536 -3328 -8384)
+	(text "pll_buffers" (rect 90 0 164 16)(font "Arial" (font_size 10)))
+	(text "inst13" (rect 8 137 39 150)(font "Intel Clear" ))
+	(port
+		(pt 0 64)
+		(input)
+		(text "inclk0" (rect 0 0 34 13)(font "Arial" (font_size 8)))
+		(text "inclk0" (rect 4 51 38 64)(font "Arial" (font_size 8)))
+		(line (pt 0 64)(pt 40 64))
+	)
+	(port
+		(pt 240 64)
+		(output)
+		(text "c0" (rect 0 0 15 13)(font "Arial" (font_size 8)))
+		(text "c0" (rect 225 51 240 64)(font "Arial" (font_size 8)))
+	)
+	(drawing
+		(text "Cyclone IV E" (rect 167 138 231 149)(font "Arial" ))
+		(text "inclk0 frequency: 25.000 MHz" (rect 50 60 196 71)(font "Arial" ))
+		(text "Operation Mode: Normal" (rect 50 72 172 83)(font "Arial" ))
+		(text "Clk " (rect 51 91 71 102)(font "Arial" ))
+		(text "Ratio" (rect 71 91 98 102)(font "Arial" ))
+		(text "Ph (dg)" (rect 97 91 134 102)(font "Arial" ))
+		(text "DC (%)" (rect 132 91 169 102)(font "Arial" ))
+		(text "c0" (rect 54 104 66 115)(font "Arial" ))
+		(text "1/6" (rect 76 104 92 115)(font "Arial" ))
+		(text "0.00" (rect 103 104 126 115)(font "Arial" ))
+		(text "50.00" (rect 136 104 165 115)(font "Arial" ))
+		(line (pt 0 0)(pt 241 0))
+		(line (pt 241 0)(pt 241 153))
+		(line (pt 0 153)(pt 241 153))
+		(line (pt 0 0)(pt 0 153))
+		(line (pt 48 89)(pt 164 89))
+		(line (pt 48 101)(pt 164 101))
+		(line (pt 48 114)(pt 164 114))
+		(line (pt 48 89)(pt 48 114))
+		(line (pt 68 89)(pt 68 114)(line_width 3))
+		(line (pt 94 89)(pt 94 114)(line_width 3))
+		(line (pt 129 89)(pt 129 114)(line_width 3))
+		(line (pt 163 89)(pt 163 114))
+		(line (pt 40 48)(pt 207 48))
+		(line (pt 207 48)(pt 207 135))
+		(line (pt 40 135)(pt 207 135))
+		(line (pt 40 48)(pt 40 135))
+		(line (pt 239 64)(pt 207 64))
+	)
+)
 (connector
 	(pt -2840 -9200)
 	(pt -2784 -9200)
@@ -2247,16 +2338,6 @@ refer to the applicable agreement for further details.
 (connector
 	(pt -1496 -9608)
 	(pt -1360 -9608)
-	(bus)
-)
-(connector
-	(pt -1512 -9592)
-	(pt -1360 -9592)
-	(bus)
-)
-(connector
-	(pt -1504 -9576)
-	(pt -1360 -9576)
 	(bus)
 )
 (connector
@@ -2992,14 +3073,6 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt -3816 -8472)
-	(pt -3816 -8568)
-)
-(connector
-	(pt -3816 -8472)
-	(pt -3776 -8472)
-)
-(connector
 	(pt -32 -9656)
 	(pt 32 -9656)
 	(bus)
@@ -3210,10 +3283,6 @@ refer to the applicable agreement for further details.
 	(pt 1792 -8568)
 )
 (connector
-	(pt -2448 -8568)
-	(pt -1384 -8568)
-)
-(connector
 	(pt 0 -8568)
 	(pt 656 -8568)
 )
@@ -3294,33 +3363,12 @@ refer to the applicable agreement for further details.
 	(pt 1792 -8352)
 )
 (connector
-	(pt -3832 -8568)
-	(pt -3816 -8568)
-)
-(connector
-	(pt -3816 -8568)
-	(pt -3168 -8568)
-)
-(connector
-	(pt -3168 -8568)
-	(pt -2784 -8568)
-)
-(connector
-	(text "SCLK" (rect -3486 -8488 -3458 -8475)(font "Intel Clear" ))
-	(pt -3488 -8472)
-	(pt -2720 -8472)
-)
-(connector
 	(pt -1904 -8472)
 	(pt -1904 -9456)
 )
 (connector
 	(pt -1904 -9456)
 	(pt -1832 -9456)
-)
-(connector
-	(pt -2720 -8472)
-	(pt -1904 -8472)
 )
 (connector
 	(pt -1904 -8472)
@@ -3337,6 +3385,129 @@ refer to the applicable agreement for further details.
 (connector
 	(pt -1832 -9472)
 	(pt -1928 -9472)
+)
+(connector
+	(pt -1296 -9336)
+	(pt -1400 -9336)
+	(bus)
+)
+(connector
+	(pt -1400 -9336)
+	(pt -1400 -9592)
+	(bus)
+)
+(connector
+	(pt -1512 -9592)
+	(pt -1400 -9592)
+	(bus)
+)
+(connector
+	(pt -1400 -9592)
+	(pt -1360 -9592)
+	(bus)
+)
+(connector
+	(pt -1296 -9320)
+	(pt -1416 -9320)
+	(bus)
+)
+(connector
+	(pt -1416 -9320)
+	(pt -1416 -9576)
+	(bus)
+)
+(connector
+	(pt -1504 -9576)
+	(pt -1416 -9576)
+	(bus)
+)
+(connector
+	(pt -1416 -9576)
+	(pt -1360 -9576)
+	(bus)
+)
+(connector
+	(pt -1296 -9304)
+	(pt -1528 -9304)
+)
+(connector
+	(pt -1360 -9448)
+	(pt -1368 -9448)
+	(bus)
+)
+(connector
+	(pt -1368 -9448)
+	(pt -1368 -9376)
+	(bus)
+)
+(connector
+	(pt -1096 -9336)
+	(pt -1080 -9336)
+	(bus)
+)
+(connector
+	(pt -1080 -9376)
+	(pt -1080 -9336)
+	(bus)
+)
+(connector
+	(pt -1080 -9376)
+	(pt -1368 -9376)
+	(bus)
+)
+(connector
+	(pt -1528 -8760)
+	(pt -1528 -9304)
+)
+(connector
+	(pt -1784 -8760)
+	(pt -1816 -8760)
+)
+(connector
+	(pt -1816 -8760)
+	(pt -1816 -8568)
+)
+(connector
+	(pt -2448 -8568)
+	(pt -1816 -8568)
+)
+(connector
+	(pt -1816 -8568)
+	(pt -1384 -8568)
+)
+(connector
+	(pt -2720 -8472)
+	(pt -1904 -8472)
+)
+(connector
+	(pt -3168 -8568)
+	(pt -2784 -8568)
+)
+(connector
+	(pt -3568 -8472)
+	(pt -3712 -8472)
+)
+(connector
+	(pt -3712 -8472)
+	(pt -3712 -8568)
+)
+(connector
+	(pt -3832 -8568)
+	(pt -3712 -8568)
+)
+(connector
+	(pt -3712 -8568)
+	(pt -3168 -8568)
+)
+(connector
+	(text "CLK_BUFFERS" (rect -3326 -8488 -3253 -8475)(font "Intel Clear" ))
+	(pt -3328 -8472)
+	(pt -2720 -8472)
+)
+(connector
+	(text "CLK_DIV" (rect -1544 -8776 -1500 -8763)(font "Intel Clear" ))
+	(pt -1528 -8760)
+	(pt -1544 -8760)
 )
 (junction (pt -2304 -9800))
 (junction (pt 32 -9440))
@@ -3378,5 +3549,8 @@ refer to the applicable agreement for further details.
 (junction (pt -952 -8472))
 (junction (pt -848 -8472))
 (junction (pt -816 -8352))
-(junction (pt -3816 -8568))
+(junction (pt -1400 -9592))
+(junction (pt -1416 -9576))
+(junction (pt -1816 -8568))
+(junction (pt -3712 -8568))
 (text "Clock 25Mhz" (rect -3984 -8600 -3909 -8585)(font "Intel Clear" (font_size 8)))

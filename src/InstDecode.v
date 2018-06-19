@@ -13,7 +13,7 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
     input COND_WB, RST, CLK;
 
     reg [15:0] ARR_REG [31:0]; // 32 registers of 16 bit size
-    reg [4:0] H_WB1, H_MEM1, H_EXEC1, H_HERE1; // registradores para cuidar de hazard:
+    reg [23:0] RLOCATION;
 
     reg [15:0] REG_REG_A, REG_REG_B, REG_IMM, REG_NPC_OUT;
     reg [4:0] REG_OPCD; 
@@ -67,9 +67,9 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
                     IR[31:27] != JR &&
                     IR[31:27] != BRLF &&
                     IR[31:27] != CALL) ? REG_REG_A
-                 : (IR[25:21] == H_EXEC1) ? EXE_OUT
-                 : (IR[25:21] == H_MEM1) ? MEM_ACC_OUT
-                 : (IR[25:21] == H_WB1) ? WB_OUT
+                 : ({1'b1,IR[25:21]} == RLOCATION[11:6]) ? EXE_OUT
+                 : ({1'b1,IR[25:21]} == RLOCATION[17:12]) ? MEM_ACC_OUT
+                 : ({1'b1,IR[25:21]} == RLOCATION[23:18]) ? WB_OUT
     /* default*/ : REG_REG_A;
 
     assign REG_B = (STATE != READ_SEND) ? REG_REG_B
@@ -83,9 +83,9 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
                     IR[31:27] != OR &&
                     IR[31:27] != CMP) ? REG_REG_B
                  : (IR[31:27] == BRLF) ? IR[20:16]
-                 : (IR[20:16] == H_EXEC1) ? EXE_OUT
-                 : (IR[20:16] == H_MEM1) ? MEM_ACC_OUT
-                 : (IR[20:16] == H_WB1) ? WB_OUT
+                 : ({1'b1,IR[20:16]} == RLOCATION[11:6]) ? EXE_OUT
+                 : ({1'b1,IR[20:16]} == RLOCATION[17:12]) ? MEM_ACC_OUT
+                 : ({1'b1,IR[20:16]} == RLOCATION[23:18]) ? WB_OUT
     /* default*/ : REG_REG_B;
 
     assign IMM = (STATE == READ_SEND) ? IR[15:0] : REG_IMM;
@@ -148,10 +148,7 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
             ARR_REG[30] <= 0;
             ARR_REG[31] <= 0;
             // reset anti hazard
-            H_WB1 <= 0;
-            H_MEM1 <= 0;
-            H_EXEC1 <= 0;
-            H_HERE1 <= 0;
+            RLOCATION <= 0;
             // etc
             REG_REG_A <= 0;
             REG_REG_B <= 0;
@@ -196,10 +193,7 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
             ARR_REG[29] <= ARR_REG[29];
             ARR_REG[30] <= ARR_REG[30];
             ARR_REG[31] <= ARR_REG[31];
-            H_WB1 <= H_WB1;
-            H_MEM1 <= H_MEM1;
-            H_EXEC1 <= H_EXEC1;
-            H_HERE1 <= H_HERE1;
+            RLOCATION <= RLOCATION;
             REG_REG_A <= REG_REG_A;
             REG_REG_B <= REG_REG_B;
             REG_IMM <= REG_IMM;
@@ -211,7 +205,8 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
             if(STATE == WB_WRITING && COND_WB)
                 ARR_REG[RD_WB] <= WB_OUT; // grava dados wb se for a condicao certa
             if(STATE == READ_SEND) begin
-                H_HERE1 <= IR[25:21]; // A atual
+                // push
+                RLOCATION[5:0] <= {1'b1,IR[25:21]}; // A atual
                 // casos em que existe um regA
                 if( IR[31:27] == LW || 
                     IR[31:27] == SW || 
@@ -227,9 +222,9 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
                     IR[31:27] == BRLF || 
                     IR[31:27] == CALL) begin
                         // saber onde procurar o regA
-                        if(IR[25:21] == H_EXEC1) REG_REG_A <= EXE_OUT;
-                        else if(IR[25:21] == H_MEM1) REG_REG_A <= MEM_ACC_OUT;
-                        else if(IR[25:21] == H_WB1) REG_REG_A <= WB_OUT;
+                        if({1'b1,IR[25:21]} == RLOCATION[11:6]) REG_REG_A <= EXE_OUT;
+                        else if({1'b1,IR[25:21]} == RLOCATION[17:12]) REG_REG_A <= MEM_ACC_OUT;
+                        else if({1'b1,IR[25:21]} == RLOCATION[23:18]) REG_REG_A <= WB_OUT;
                         else REG_REG_A <= ARR_REG[IR[25:21]];
                 end
                 // casos em que existe um regB
@@ -243,9 +238,9 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
                     IR[31:27] == OR || 
                     IR[31:27] == CMP) begin
                         // saber onde procurar o regB
-                        if(IR[20:16] == H_EXEC1) REG_REG_B <= EXE_OUT;
-                        else if(IR[20:16] == H_MEM1) REG_REG_B <= MEM_ACC_OUT;
-                        else if(IR[20:16] == H_WB1) REG_REG_B <= WB_OUT;
+                        if({1'b1,IR[20:16]} == RLOCATION[11:6]) REG_REG_B <= EXE_OUT;
+                        else if({1'b1,IR[20:16]} == RLOCATION[17:12]) REG_REG_B <= MEM_ACC_OUT;
+                        else if({1'b1,IR[20:16]} == RLOCATION[23:18]) REG_REG_B <= WB_OUT;
                         else REG_REG_B <= ARR_REG[IR[20:16]];
                 end
                 // caso especial do brlf
@@ -258,10 +253,8 @@ module InstDecode(REG_A, REG_B, OPCD, IMM, NPC_OUT, CLK, RST, IR, NPC_IN, WB_OUT
                 REG_OPT_BIT <= IR[26];
             end
             if(STATE == D_TABLE) begin
-                // "decrementa" tabela
-                H_WB1 <= H_MEM1;
-                H_MEM1 <= H_EXEC1;
-                H_EXEC1 <= H_HERE1;
+                // pop
+                RLOCATION <= RLOCATION << 5;
             end
         end
     end

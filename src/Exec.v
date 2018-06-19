@@ -1,20 +1,19 @@
-module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B, IMM, OPCD_IN, ADDR_REG_IN, CLK, RST, OPT_BIT_IN, ESTADO, INTERRUPT);
+module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, REG_B, IMM, OPCD_IN, ADDR_REG_IN, CLK, RST, OPT_BIT_IN, INTERRUPT, RESULT_DIV, ESTADO);
 
-    output [31:0] ALU_OUT;
-    output [4:0] OPCD_OUT, ADDR_REG_OUT;
+    output reg [31:0] ALU_OUT;
+    output [4:0] OPCD_OUT, ADDR_REG_OUT; // repassado
     output reg COND;
-    output OPT_BIT_OUT;
+    output OPT_BIT_OUT; // repassado
     
     output [2:0] ESTADO;
 
-    input [15:0] NPC_IN, REG_A, REG_B, IMM;
+    input [15:0] NPC_IN, REG_A, REG_B, IMM, RESULT_DIV;
     input [4:0] OPCD_IN, ADDR_REG_IN;
     input CLK, RST, OPT_BIT_IN;
 
     input [3:0] INTERRUPT;
     
-    reg [15:0] PCS_INTERRUPTED [4:0]; // 5 registers of 10 bits
-    reg [2:0] COUNT_PCS;
+    reg [149:0] PCS_INTERRUPTED;
 
     reg [4:0] RFLAGS;
     reg [4:0] REG_OPCD_OUT, REG_ADDR_REG_OUT;
@@ -63,29 +62,6 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, R
     assign ADDR_REG_OUT = REG_ADDR_REG_OUT;
     assign OPT_BIT_OUT = REG_OPT_BIT_OUT;
 
-    // ULA
-    assign ALU_OUT = (INTERRUPT == 4'b0001) ? IN_CALL_0 // interrupções prioritárias
-                   : (INTERRUPT == 4'b0010) ? IN_CALL_1
-                   : (INTERRUPT == 4'b0100) ? IN_CALL_2
-                   : (INTERRUPT == 4'b1000) ? IN_CALL_3
-                   : (OPCD_IN == LW)        ? REG_B + IMM // precisa para valor de memoria regB + Imm
-                   : (OPCD_IN == SW)        ? REG_B + IMM // precisa para valor de memoria regB + Imm
-                   : (OPCD_IN == ADD)       ? REG_A + REG_B
-                   : (OPCD_IN == SUB)       ? REG_A - REG_B
-                   : (OPCD_IN == MUL)       ? REG_A * REG_B
-                   : (OPCD_IN == DIV)       ? REG_A / REG_B
-                   : (OPCD_IN == AND)       ? REG_A & REG_B
-                   : (OPCD_IN == OR)        ? REG_A | REG_B
-                   : (OPCD_IN == CMP)       ? 0 // seta flags somente; sem saida
-                   : (OPCD_IN == NOT)       ? ~REG_A
-                   : (OPCD_IN == JR)        ? REG_A
-                   : (OPCD_IN == JPC)       ? IMM
-                   : (OPCD_IN == BRLF)      ? REG_A // vai pro endereco [REG_A] se RFLAGS[i] == OPT_BIT_IN
-                   : (OPCD_IN == CALL)      ? REG_A // chamada de subrotina no endereco [REG_A]
-                   : (OPCD_IN == RET)       ? PCS_INTERRUPTED[COUNT_PCS] // retorna pro ultimo pc
-                   : (OPCD_IN == NOP)       ? 0
-    /* default */  :                          0; // default; sem saida
-
     // DPE
     always @ (*) begin
         NEXT_STATE = STATE;
@@ -109,51 +85,64 @@ module Exec(ALU_OUT, OPCD_OUT, ADDR_REG_OUT, OPT_BIT_OUT, COND, NPC_IN, REG_A, R
             REG_OPCD_OUT <= 0;
             REG_ADDR_REG_OUT <= 0;
             REG_OPT_BIT_OUT <= 0;
-            PCS_INTERRUPTED[0] <= 0;
-            PCS_INTERRUPTED[1] <= 0;
-            PCS_INTERRUPTED[2] <= 0;
-            PCS_INTERRUPTED[3] <= 0;
-            PCS_INTERRUPTED[4] <= 0;
-            COUNT_PCS <= 0;
+            PCS_INTERRUPTED <= 0;
+            ALU_OUT <= 0;
         end
         else begin
-              STATE <= NEXT_STATE;
+            STATE <= NEXT_STATE;
             /* defaults */
             RFLAGS <= RFLAGS;
             REG_OPCD_OUT <= REG_OPCD_OUT;
             REG_ADDR_REG_OUT <= REG_ADDR_REG_OUT;
             REG_OPT_BIT_OUT <= REG_OPT_BIT_OUT;
-            PCS_INTERRUPTED[0] <= PCS_INTERRUPTED[0];
-            PCS_INTERRUPTED[1] <= PCS_INTERRUPTED[1];
-            PCS_INTERRUPTED[2] <= PCS_INTERRUPTED[2];
-            PCS_INTERRUPTED[3] <= PCS_INTERRUPTED[3];
-            PCS_INTERRUPTED[4] <= PCS_INTERRUPTED[4];
-            COUNT_PCS <= COUNT_PCS;
+            ALU_OUT <= ALU_OUT;
             /* state logic */
-            if(INTERRUPT > 0) begin
-                // coloca na pilha
-                COUNT_PCS <= COUNT_PCS + 1;
-                PCS_INTERRUPTED[COUNT_PCS] <= NPC_IN;
+            if(STATE == CALCULA_ULA_1) begin
+                // if is interrupted
+                if(INTERRUPT > 0) begin
+                    // push current pc
+                    PCS_INTERRUPTED[15:0] <= NPC_IN; // salva PC
+                    if(INTERRUPT == 4'b0001) ALU_OUT <= IN_CALL_0;
+                    else if(INTERRUPT == 4'b0010) ALU_OUT <= IN_CALL_1;
+                    else if(INTERRUPT == 4'b0100) ALU_OUT <= IN_CALL_2;
+                    else if(INTERRUPT == 4'b1000) ALU_OUT <= IN_CALL_3;
+                    
+                end
+                else if(OPCD_IN == LW) ALU_OUT <= REG_B + IMM; 
+                else if(OPCD_IN == SW) ALU_OUT <= REG_B + IMM;
+                else if(OPCD_IN == ADD) ALU_OUT <= REG_A + REG_B;
+                else if(OPCD_IN == SUB) ALU_OUT <= REG_A - REG_B;
+                else if(OPCD_IN == MUL) ALU_OUT <= REG_A * REG_B;
+                // else if(OPCD_IN == DIV) ALU_OUT <= REG_A / REG_B;
+                else if(OPCD_IN == AND) ALU_OUT <= REG_A & REG_B;
+                else if(OPCD_IN == OR) ALU_OUT <= REG_A | REG_B;
+                else if(OPCD_IN == CMP) ALU_OUT <= 0;
+                else if(OPCD_IN == NOT) ALU_OUT <= ~REG_A;
+                else if(OPCD_IN == JR) ALU_OUT <= REG_A;
+                else if(OPCD_IN == JPC) ALU_OUT <= IMM;
+                else if(OPCD_IN == BRLF) ALU_OUT <= REG_A;
+                else if(OPCD_IN == CALL) ALU_OUT <= REG_A;
+                else if(OPCD_IN == RET) begin
+                    ALU_OUT <= PCS_INTERRUPTED[15:0];
+                    // shift pcs
+                    PCS_INTERRUPTED <= PCS_INTERRUPTED << 16;
+                end
+                else if(OPCD_IN == NOP) ALU_OUT <= 0;
             end
-
-            else if(OPCD_IN == RET) begin
-                // retira da pilha 1
-                COUNT_PCS <= COUNT_PCS - 1;
-                PCS_INTERRUPTED[0] <= PCS_INTERRUPTED[1];
-                PCS_INTERRUPTED[1] <= PCS_INTERRUPTED[2];
-                PCS_INTERRUPTED[2] <= PCS_INTERRUPTED[3];
-                PCS_INTERRUPTED[3] <= PCS_INTERRUPTED[4];
+            else if(STATE == CALCULA_ULA_2) begin
+                if(OPCD_IN == CMP) begin
+                    if(REG_A > REG_B) // above
+                        RFLAGS[3] <= 1;
+                    if(REG_A == REG_B) // equal
+                        RFLAGS[2] <= 1;
+                    if(REG_A < REG_B) // below
+                        RFLAGS[1] <= 1;
+                    if(ALU_OUT > 16'b1111111111111111) // overflow
+                        RFLAGS[0] <= 1;
+                end
             end
-
-            else if(OPCD_IN == CMP) begin
-                if(REG_A > REG_B) // above
-                    RFLAGS[3] <= 1;
-                if(REG_A == REG_B) // equal
-                    RFLAGS[2] <= 1;
-                if(REG_A < REG_B) // below
-                    RFLAGS[1] <= 1;
-                if(ALU_OUT > 16'b1111111111111111) // overflow
-                    RFLAGS[0] <= 1;
+            else if(STATE == CALCULA_ULA_3) begin
+                if(OPCD_IN == DIV) ALU_OUT <= RESULT_DIV;
             end
             else if(STATE == SEND) begin
                 REG_OPCD_OUT <= OPCD_IN;
