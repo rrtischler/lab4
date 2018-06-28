@@ -2,8 +2,9 @@
 module InstDecode_tb();
 
 wire [15:0] REG_A, REG_B, IMM, NPC_OUT;
-wire [5:0] OPCD;
+wire [4:0] OPCD;
 wire [4:0] ADDR_REG;
+wire OPT_BIT;
 
 wire [2:0] ESTADO;
 
@@ -21,6 +22,7 @@ InstDecode tb_inst
   .NPC_OUT(NPC_OUT),
   .OPCD(OPCD),
   .ADDR_REG(ADDR_REG),
+  .OPT_BIT(OPT_BIT),
   .ESTADO(ESTADO),
   .RST(RST),
   .CLK(CLK),
@@ -39,31 +41,44 @@ always #20 CLK = ~CLK;
 initial
 begin
 
-$monitor("TEMPO:%d -- REG_A:%d | REG_B:%d | NPC_OUT:%d | OPCD:%d | ADDR_REG:%d | ESTADO:%d",
-	$time, REG_A, REG_B, IMM, NPC_OUT, OPCD, ADDR_REG, ESTADO);
+$monitor("TEMPO:%d -- REG_A:%d | REG_B:%d | IMM:%d | NPC_OUT:%d | OPCD:%d | ADDR_REG:%d | OPT_BIT:%d | ESTADO:%d",
+	$time, REG_A, REG_B, IMM, NPC_OUT, OPCD, ADDR_REG, OPT_BIT, ESTADO);
 	 // estados iniciais
-	 CLK = 0;
-	 RST = 0;
+	CLK = 1;
+	RST = 0;
+	IR = 191496192; // SW R27, (R10)
+	NPC_IN = 500;
+	MEM_ACC_OUT = 50;
+	EXE_OUT = 60;
+	WB_OUT = 70;
+	RD_WB = 27;
+	COND_WB = 0;
 
-	 // ---- INICIO ----
-	 #20 // clock 1
-	 RST = 1; // retira o reset
-	 
-	 #40 // clock 2
+	// ---- INICIO ----
+	#40 // clock 1
+	RST = 1; // retira o reset
 
-	 #41 // clock 3
+	
+	#400
+	COND_WB = 1;
 
-	 #41 // clock 4
+	#40 // clock 2
 
-	 #41 // clock 5
+	#40 // clock 3
 
-	 #41 // clock 6
-
-	 #41 // clock 7
-
-	 // etc ...
+	#40 // clock 4
 
 
+	#40 // clock 5
+
+
+	#40 // clock 6
+
+
+	#40 // clock 7
+
+	// etc ...
+	
 	 #2000 $stop;
 end
 
