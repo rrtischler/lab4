@@ -190,9 +190,9 @@ m5: None
 ## result: ##
 opcode(bin): 0b01011
 opt_bit(bin): 0b0
-ra(bin): 0b1010101
+ra(bin): 0b00000
 rb(bin): 0b00000
-imm(bin): 0b0000000000000000
+imm(bin): 0b0000001101110101
 ------- line: 15 -------
 opcode: BRFL
 m1: R7
@@ -232,5 +232,29 @@ opt_bit(bin): 0b0
 ra(bin): 0b00111
 rb(bin): 0b00000
 imm(bin): 0b0000000000000000
-error at line 18: RET
-
+------- line: 18 -------
+opcode: RET
+m1: None
+m2: None (imm)
+m3: None
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b01110
+opt_bit(bin): 0b0
+ra(bin): 0b00000
+rb(bin): 0b00000
+imm(bin): 0b0000000000000000
+------- line: 19 -------
+opcode: NOP
+m1: None
+m2: None (imm)
+m3: None
+m4: None
+m5: None
+## result: ##
+opcode(bin): 0b01111
+opt_bit(bin): 0b0
+ra(bin): 0b00000
+rb(bin): 0b00000
+imm(bin): 0b0000000000000000

@@ -25,10 +25,10 @@ def compile(line, count):
              'CALL':    0b01101,
              'RET':     0b01110,
              'NOP':     0b01111,}
-    pattern = re.compile(r'^(?P<opcode>\w+) (?P<m1>\w+)?[ ,]*(?P<m2>\d+)?[ ]?(?P<m3>\(\w+\)+)?(?P<m4>\w+)?(?P<m5>,\d)?$') # um pouco de regex
+    pattern = re.compile(r'^(?P<opcode>\w+)[ ]*(?P<m1>\w+)?[ ,]*(?P<m2>\d+)?[ ]*(?P<m3>\(\w+\)+)?(?P<m4>\w+)?(?P<m5>,\d)?$') # um pouco de regex
     result = pattern.match(line)
     if not result:
-        print('error at line {}: {}'.format(count, line))
+        print('error at line {}: {}'.format(count+1, line))
         exit(1)
     # debug:
     if DEBUG:
@@ -41,7 +41,7 @@ def compile(line, count):
         print('m5:', result.group('m5'))
     
     if result.group('opcode').upper() in ['LW', 'SW', 'ADD', 'SUB', 'MUL', 'DIV', 
-                                          'AND', 'OR', 'CMP', 'NOT', 'JR', 'JPC', 'CALL',
+                                          'AND', 'OR', 'CMP', 'NOT', 'JR', 'CALL',
                                           'RET', 'NOP']:
         opcode = table[result.group('opcode').upper()]
         if result.group('m1'):
@@ -85,6 +85,12 @@ def compile(line, count):
         else:
             opt_bit = 0b0
         imm = 0b0000000000000000
+    elif result.group('opcode').upper() == 'JPC':
+        opcode = table[result.group('opcode').upper()]
+        ra = 0b00000
+        rb = 0b00000
+        opt_bit = 0b0
+        imm = int(result.group('m1'))
     else: # wrong opcode
         print('unknown opcode at line {}: {}'.format(count, line))
         exit(2)
@@ -110,7 +116,7 @@ def run():
         with open(sys.argv[2],'w') as out:
             for line in lines:
                 val = '{:08x}'.format(compile(line, count))
-                out.write('{}\n'.format(val))
+                out.write(':04{:04x}00{}\n'.format(count, val))
                 count = count + 1
     else:
         print(usage(sys.argv[0]))
